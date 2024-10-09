@@ -10,9 +10,7 @@ public class Human {
     public Human father;
     public String[][] schedule;
 
-    public Human() {
-
-    }
+    public Human(){}
 
     public Human(String name, String surname, Integer year) {
         this.name = name;
@@ -39,7 +37,7 @@ public class Human {
     }
 
     public void greetPet() {
-        System.out.println("Hello, " + pet.nickname);
+        System.out.printf("Hello, %s /n",pet.nickname );
     }
 
     public void describePet() {
@@ -47,6 +45,9 @@ public class Human {
     }
 
     public String toString() {
-        return String.format("Human{name = %s,surname = %s,year = %d,iq= %d,mother = %s%s,%s", name, surname, year, IQ, mother.name, mother.surname, pet.toString());
+        return String.format("Human{name = %s," + "surname = %s," + "year = %d," + "iq= %d," +
+                "mother = %s%s,%s",
+                name, surname, year,
+                IQ, mother.name, mother.surname, pet.toString());
     }
 }

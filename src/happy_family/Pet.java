@@ -1,7 +1,5 @@
 package happy_family;
 
-import com.sun.org.apache.xpath.internal.operations.String;
-
 import java.util.Arrays;
 
 public class Pet {
@@ -11,12 +9,7 @@ public class Pet {
     public Integer tricklevel;
     public String[] habits;
 
-
-    public Pet() {
-
-    }
-
-
+    public Pet() {}
     public Pet(String species, String nickname, Integer age, Integer tricklevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
@@ -32,24 +25,23 @@ public class Pet {
 
 
     public void eat() {
+
         System.out.println("I am eating");
     }
 
     public void respond() {
-        System.out.println("Hello, owner. I am " + nickname + "I miss you");
+        System.out.printf("Hello, owner. I am  %s I miss you /n", nickname);
     }
 
     public void foul() {
         System.out.println("I need to cover it up");
     }
 
-    public java.lang.String toString() {
-        return "nickname = " + nickname
-                + "age = "
-                + age
-                + " tricklevel = "
-                + tricklevel
-                + " habits = "
-                + Arrays.toString(habits);
+    public String toString() {
+        return String.format("Dog{nickname = %s," +
+                "age = %d," +
+                "tricklevel = %d, " +
+                "habits = %s", nickname, age, tricklevel,habits);
+
     }
 }
