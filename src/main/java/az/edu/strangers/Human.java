@@ -41,7 +41,7 @@ public class Human {
     }
 
     public void describePet() {
-        System.out.printf("I have an %sis %dyears old, he is%d%n", pet.species, pet.age, pet.tricklevel);
+        System.out.printf("I have an %sis %dyears old, he is%d%n", pet.species, pet.age, pet.trickLevel);
     }
 
     public String toString() {

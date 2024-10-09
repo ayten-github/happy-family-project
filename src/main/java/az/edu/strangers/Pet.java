@@ -6,15 +6,15 @@ public class Pet {
     public String species;
     public String nickname;
     public Integer age;
-    public Integer tricklevel;
+    public Integer trickLevel;
     public String[] habits;
 
     public Pet() {}
-    public Pet(String species, String nickname, Integer age, Integer tricklevel, String[] habits) {
+    public Pet(String species, String nickname, Integer age, Integer trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
-        this.tricklevel = tricklevel;
+        this.trickLevel = trickLevel;
         this.habits = habits;
     }
 
