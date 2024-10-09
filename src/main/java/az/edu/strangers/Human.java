@@ -1,4 +1,4 @@
-package happy_family;
+package az.edu.strangers;
 
 public class Human {
     public String name;

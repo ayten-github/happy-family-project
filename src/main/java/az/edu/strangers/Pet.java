@@ -1,4 +1,4 @@
-package happy_family;
+package az.edu.strangers;
 
 import java.util.Arrays;
 
