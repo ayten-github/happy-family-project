@@ -1,8 +1,10 @@
 package az.edu.strangers;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Pet {
+
     private String species;
     private String nickName;
     private Integer age;
@@ -26,12 +28,11 @@ public class Pet {
     }
 
     public void eat() {
-
         System.out.println("I am eating");
     }
 
     public void respond() {
-        System.out.printf("Hello, owner. I am  %s I miss you /n", getNickName());
+        System.out.printf("Hello, owner. I am  %s I miss you /n", nickName);
     }
 
     public void foul() {
@@ -78,9 +79,27 @@ public class Pet {
         this.habits = habits;
     }
 
-
     public String toString() {
-        return String.format("Pet {: species=%s ,nickname=%s, age=%d, trickLevel=%d, habits=%s }"
-                , getSpecies(), getNickName(), getAge(), getTrickLevel(), Arrays.toString(habits));
+        return "%s{nickname='%s', age=%d, trickLevel=%d, habits=%s}"
+                .formatted(species, nickName, age, trickLevel, Arrays.toString(habits));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return Objects.equals(species, pet.species) &&
+                Objects.equals(nickName, pet.nickName) &&
+                Objects.equals(age, pet.age) &&
+                Objects.equals(trickLevel, pet.trickLevel) &&
+                Arrays.equals(habits, pet.habits);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(species, nickName, age, trickLevel);
+        result = 31 * result + Arrays.hashCode(habits);
+        return result;
     }
 }

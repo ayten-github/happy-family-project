@@ -1,18 +1,25 @@
 package az.edu.strangers;
 
 public class HappyFamilyApp {
+
     public static void main(String[] args) {
-        Pet pet1 = new Pet("dog", "Charlie", 4, 33, new String[]{"drink", "play", "eat"});
-        Pet pet2 = new Pet("cat", "Mex", 5, 49, new String[]{"sleep", "play", "eat"});
+        String[] habits = {"eat", "drink", "sleep"};
+        Pet dog = new Pet("dog", "Rock", 5, 75, habits);
 
-        Human mother = new Human(" Helen", "Miren", 1991);
-        Human father = new Human("Fred", "Miren", 1989);
-        Human child = new Human("Anna", "Miren", 2012, mother, father);
+        Human mother = new Human("Jane", "Karleone", 1975);
+        Human father = new Human("Vito", "Karleone", 1973);
 
-        child.pet = pet1;
+        Family family = new Family(mother, father);
+        family.setPet(dog);
+
+        String[][] schedule = {{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
+        Human child = new Human("Michael", "Karleone", 1999, 90, schedule, family);
+
+        family.addChild(child);
+
+        System.out.println(family);
+
         child.greetPet();
-        pet2.eat();
-        pet1.foul();
-        pet2.respond();
+        child.describePet();
     }
 }

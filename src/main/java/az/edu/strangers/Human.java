@@ -1,16 +1,16 @@
 package az.edu.strangers;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Human {
+
     private String name;
     private String surname;
     private Integer year;
     private Integer IQ;
-    private Pet pet;
     private String[][] schedule;
     private Family family;
-
 
     public Human() {
     }
@@ -21,12 +21,13 @@ public class Human {
         this.year = year;
     }
 
-    public Human(String name, String surname, Integer year, Pet pet, String[][] schedule) {
+    public Human(String name, String surname, Integer year, Integer IQ, String[][] schedule, Family family) {
         this.name = name;
         this.surname = surname;
         this.year = year;
-        this.pet = pet;
+        this.IQ = IQ;
         this.schedule = schedule;
+        this.family = family;
     }
 
     public String getName() {
@@ -61,14 +62,6 @@ public class Human {
         this.IQ = IQ;
     }
 
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
     public String[][] getSchedule() {
         return schedule;
     }
@@ -86,18 +79,36 @@ public class Human {
     }
 
     public void greetPet() {
-        System.out.printf("Hello, %s /n", pet.getNickName());
+        if (family != null && family.getPet() != null) {
+            System.out.printf("Hello, %s /n", family.getPet().getNickName());
+        } else {
+            System.out.println("Family doesn't have a pet");
+        }
     }
 
     public void describePet() {
-        System.out.printf("I have an %s is %d years old, he is %d %n", pet.getSpecies(), pet.getAge(), pet.getTrickLevel());
+        if (family != null && family.getPet() != null) {
+            String slyness = family.getPet().getTrickLevel() > 50 ? "very sly" : "almost not sly";
+            System.out.printf("I have a %s, it is %d years old, and it is %s%n", family.getPet().getSpecies(), family.getPet().getAge(), slyness);
+        }
     }
-
 
     public String toString() {
-        return "Human: { name = %s, surname = %s, year = %d, IQ= %d, schedule=%s }".formatted(
-                getName(), getSurname(), getYear(), pet.toString(), Arrays.deepToString(schedule));
+        return "Human{name='%s', surname='%s', year=%d, iq=%s, schedule=%s}".formatted(name, surname, year, IQ, Arrays.deepToString(schedule));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return Objects.equals(year, human.year) && Objects.equals(IQ, human.IQ) && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Arrays.deepEquals(schedule, human.schedule);
+    }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, surname, year, IQ);
+        result = 31 * result + Arrays.deepHashCode(schedule);
+        return result;
+    }
 }
