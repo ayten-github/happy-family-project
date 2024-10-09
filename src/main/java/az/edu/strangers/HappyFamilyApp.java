@@ -8,6 +8,7 @@ public class HappyFamilyApp {
         Human mother = new Human(" Helen", "Miren", 1991);
         Human father = new Human("Fred", "Miren", 1989);
         Human child = new Human("Anna", "Miren", 2012, mother, father);
+
         child.pet = pet1;
         child.greetPet();
         pet2.eat();
