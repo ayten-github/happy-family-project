@@ -21,7 +21,7 @@ public class Family {
     public Family(Human father, Human mother) {
         this.father = father;
         this.mother = mother;
-        this.children = new Human[10];
+        this.children = new Human[1];
         childrenCount = 0;
     }
 
@@ -66,13 +66,10 @@ public class Family {
     }
 
     public void addChild(Human child) {
-        if (childrenCount < children.length) {
-            this.children[childrenCount] = child;
-            child.setFamily(this);
-            childrenCount++;
-        } else {
-            System.out.println("Children cann't add to family!");
-        }
+        this.children[childrenCount] = child;
+        child.setFamily(this);
+        childrenCount++;
+        children = Arrays.copyOf(children, children.length + 1);
 
     }
 
