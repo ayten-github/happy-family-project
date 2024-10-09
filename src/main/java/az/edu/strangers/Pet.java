@@ -80,7 +80,7 @@ public class Pet {
 
 
     public String toString() {
-        return String.format("{ Pet: species=%s ,nickname=%s, age=%d, trickLevel=%d, habits=%s }"
-                , getSpecies(), getNickName(), getAge(), getTrickLevel(), Arrays.toString(getHabits()));
+        return String.format("Pet {: species=%s ,nickname=%s, age=%d, trickLevel=%d, habits=%s }"
+                , getSpecies(), getNickName(), getAge(), getTrickLevel(), Arrays.toString(habits));
     }
 }

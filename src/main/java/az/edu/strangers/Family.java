@@ -6,7 +6,7 @@ public class Family {
     private Human father;
     private Human mother;
     private Pet pet;
-    private Human children[];
+    private Human[] children;
     private Integer childrenCount;
 
     static {
@@ -96,8 +96,12 @@ public class Family {
 
     @Override
     public String toString() {
-        return String.format("{ Family: father=%s, mother=%s, children=%s, pet=%s"
-                , getFather().toString(), getMother().toString(), Arrays.toString(getChildren()), getPet().toString());
-
+        return String.format("{ Family: father=%s, mother=%s, pet=%s, children=%s, childrenCount=%d",
+                father != null ? getFather().toString() : "null",
+                mother != null ? getMother().toString() : "null",
+                pet != null ? getPet().toString() : "null",
+                Arrays.toString(children),
+                childrenCount != null ? childrenCount : 0);
     }
+
 }

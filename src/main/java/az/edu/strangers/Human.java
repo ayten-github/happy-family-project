@@ -1,5 +1,7 @@
 package az.edu.strangers;
 
+import java.util.Arrays;
+
 public class Human {
     private String name;
     private String surname;
@@ -9,13 +11,6 @@ public class Human {
     private String[][] schedule;
     private Family family;
 
-    public Family getFamily() {
-        return family;
-    }
-
-    public void setFamily(Family family) {
-        this.family = family;
-    }
 
     public Human() {
     }
@@ -26,7 +21,7 @@ public class Human {
         this.year = year;
     }
 
-    public Human(String name, String surname, Integer year, Pet pet, Human father, Human mother, String[][] schedule) {
+    public Human(String name, String surname, Integer year, Pet pet, String[][] schedule) {
         this.name = name;
         this.surname = surname;
         this.year = year;
@@ -82,6 +77,14 @@ public class Human {
         this.schedule = schedule;
     }
 
+    public Family getFamily() {
+        return family;
+    }
+
+    public void setFamily(Family family) {
+        this.family = family;
+    }
+
     public void greetPet() {
         System.out.printf("Hello, %s /n", pet.getNickName());
     }
@@ -92,8 +95,8 @@ public class Human {
 
 
     public String toString() {
-        return String.format("{ Human: name = %s, surname = %s, year = %d, IQ= %d,",
-                getName(), getSurname(), getYear(), pet.toString());
+        return "Human: { name = %s, surname = %s, year = %d, IQ= %d, schedule=%s }".formatted(
+                getName(), getSurname(), getYear(), pet.toString(), Arrays.deepToString(schedule));
     }
 
 
