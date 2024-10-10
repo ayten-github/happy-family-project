@@ -14,7 +14,7 @@ class HumanTest {
 
     @BeforeEach
     void setUp() {
-        pet = new Pet("dog", "Rock", 5, 75, new String[]{"eat", "sleep"});
+        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
         Human mother = new Human("Jane", "Karleone", 1975);
         Human father = new Human("Vito", "Karleone", 1973);
         family = new Family(mother, father);

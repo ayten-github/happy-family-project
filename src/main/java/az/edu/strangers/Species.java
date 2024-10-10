@@ -24,11 +24,11 @@ public enum Species {
         return numberOfLegs;
     }
 
-    public boolean isHasFur() {
+    public boolean hasFur() {
         return hasFur;
     }
 
-    public boolean isCanFly() {
+    public boolean canFly() {
         return canFly;
     }
 }

@@ -11,7 +11,7 @@ class PetTest {
 
     @BeforeEach
     void setUp() {
-        pet = new Pet("dog", "Rock", 5, 75, new String[]{"eat", "sleep"});
+        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
     }
 
     @Test
@@ -31,7 +31,7 @@ class PetTest {
 
     @Test
     void testEqualsAndHashCode() {
-        Pet pet2 = new Pet("dog", "Rock", 5, 75, new String[]{"eat", "sleep"});
+        Pet pet2 = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
         assertEquals(pet, pet2);
         assertEquals(pet.hashCode(), pet2.hashCode());
     }
