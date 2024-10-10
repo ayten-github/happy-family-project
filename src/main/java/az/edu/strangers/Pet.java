@@ -3,13 +3,13 @@ package az.edu.strangers;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Pet {
+public abstract class Pet {
 
-    private Species species;
-    private String nickName;
-    private Integer age;
-    private Integer trickLevel;
-    private String[] habits;
+    protected Species species;
+    protected String nickName;
+    protected Integer age;
+    protected Integer trickLevel;
+    protected String[] habits;
 
     public Pet() {
     }
@@ -28,18 +28,17 @@ public class Pet {
     }
 
     public void eat() {
-        System.out.println("I am eating");
+        System.out.println(species.getSpeciesName() + " is eating.");
     }
 
-    public void respond() {
-        System.out.printf("Hello, owner. I am  %s I miss you /n", nickName);
-    }
+    public abstract void respond();
 
     public void foul() {
         System.out.println("I need to cover it up");
     }
 
-    public Species getSpecies() {return species;
+    public Species getSpecies() {
+        return species;
     }
 
     public void setSpecies(Species species) {

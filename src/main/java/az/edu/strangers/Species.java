@@ -3,7 +3,8 @@ package az.edu.strangers;
 public enum Species {
     DOG("Dog", 4, true, false),
     CAT("Cat", 4, true, false),
-    BIRD("Bird", 2, false, true);
+    BIRD("Bird", 2, false, true),
+    Unknown("Unknown", 0, false, false);
     private final String speciesName;
     private final int numberOfLegs;
     private final boolean hasFur;
