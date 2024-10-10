@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Pet {
 
-    private String species;
+    private Species species;
     private String nickName;
     private Integer age;
     private Integer trickLevel;
@@ -14,12 +14,12 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(String species, String nickName) {
+    public Pet(Species species, String nickName) {
         this.species = species;
         this.nickName = nickName;
     }
 
-    public Pet(String species, String nickName, Integer age, Integer trickLevel, String[] habits) {
+    public Pet(Species species, String nickName, Integer age, Integer trickLevel, String[] habits) {
         this.species = species;
         this.nickName = nickName;
         this.age = age;
@@ -39,11 +39,10 @@ public class Pet {
         System.out.println("I need to cover it up");
     }
 
-    public String getSpecies() {
-        return species;
+    public Species getSpecies() {return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 

@@ -4,7 +4,7 @@ public class HappyFamilyApp {
 
     public static void main(String[] args) {
         String[] habits = {"eat", "drink", "sleep"};
-        Pet dog = new Pet("dog", "Rock", 5, 75, habits);
+        Pet dog = new Pet(Species.DOG, "Rock", 5, 75, habits);
 
         Human mother = new Human("Jane", "Karleone", 1975);
         Human father = new Human("Vito", "Karleone", 1973);
