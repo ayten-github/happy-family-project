@@ -18,7 +18,7 @@ class FamilyTest {
         mother = new Human("Jane", "Karleone", 1975);
         father = new Human("Vito", "Karleone", 1973);
         family = new Family(mother, father);
-        pet = new Pet("dog", "Rock", 5, 75, new String[]{"eat", "sleep"});
+        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
         family.setPet(pet);
 
         String[][] schedule = {{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
