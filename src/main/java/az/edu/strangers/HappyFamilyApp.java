@@ -15,6 +15,8 @@ public class HappyFamilyApp {
 
         Woman mother = new Woman("Jane", "Karleone", 1975, 80);
         Man father = new Man("Vito", "Karleone", 1973, 90);
+        father.repairCar();
+        mother.makeUp();
 
         Family family = new Family(mother, father);
         family.setPet(dog);
