@@ -13,8 +13,8 @@ public class HappyFamilyApp {
         cat.respond();
         cat.foul();
 
-        Woman mother = new Woman("Jane", "Karleone", 1975);
-        Man father = new Man("Vito", "Karleone", 1973);
+        Woman mother = new Woman("Jane", "Karleone", 1975, 80);
+        Man father = new Man("Vito", "Karleone", 1973, 90);
 
         Family family = new Family(mother, father);
         family.setPet(dog);
@@ -28,6 +28,10 @@ public class HappyFamilyApp {
         Human child = new Human("Michael", "Karleone", 1999, 90, schedule, family);
 
         family.addChild(child);
+
+
+        Human newChild = family.bornChild();
+        family.addChild(newChild);
 
         System.out.println(family);
 
