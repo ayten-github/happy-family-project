@@ -19,8 +19,7 @@ public abstract class Pet {
         this.nickName = nickName;
     }
 
-    public Pet(Species species, String nickName, Integer age, Integer trickLevel, String[] habits) {
-        this.species = species;
+    public Pet(String nickName, Integer age, Integer trickLevel, String[] habits) {
         this.nickName = nickName;
         this.age = age;
         this.trickLevel = trickLevel;
