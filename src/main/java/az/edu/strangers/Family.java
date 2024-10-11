@@ -79,6 +79,7 @@ public class Family implements HumanCreator {
         this.children[childrenCount] = child;
         child.setFamily(this);
         childrenCount++;
+
     }
 
 
@@ -118,18 +119,22 @@ public class Family implements HumanCreator {
         String[] boyNames = {"Alex", "Jord", "Mike"};
         String[] girlNames = {"Alina", "Julia", "Mia"};
 
-        boolean isChild = random.nextBoolean();
+        boolean isMan = random.nextBoolean();
 
         Integer childIQ = (getFather().getIQ() + getMother().getIQ()) / 2;
 
         String name;
-        if (isChild) {
+        if (isMan) {
             name = boyNames[random.nextInt(boyNames.length)];
-            return new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+            Man man = new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+            this.addChild(man);
+            return man;
 
         } else {
             name = girlNames[random.nextInt(boyNames.length)];
-            return new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+            Woman woman = new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+            this.addChild(woman);
+            return woman;
 
         }
 

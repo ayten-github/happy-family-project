@@ -32,9 +32,6 @@ public class HappyFamilyApp {
         family.addChild(child);
 
 
-        Human newChild = family.bornChild();
-        family.addChild(newChild);
-
         System.out.println(family);
 
         mother.greetPet();
