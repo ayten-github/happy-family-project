@@ -81,6 +81,7 @@ public class Family implements HumanCreator {
         childrenCount++;
     }
 
+
     public boolean deleteChild(int index) {
         if (index >= 0 && index < children.length) {
             Human[] newChildren = new Human[children.length - 1];
@@ -125,11 +126,13 @@ public class Family implements HumanCreator {
         if (isChild) {
             name = boyNames[random.nextInt(boyNames.length)];
             return new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+
         } else {
             name = girlNames[random.nextInt(boyNames.length)];
             return new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
 
         }
+
     }
 
     @Override

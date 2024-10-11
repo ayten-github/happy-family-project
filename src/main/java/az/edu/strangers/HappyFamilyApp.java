@@ -37,7 +37,7 @@ public class HappyFamilyApp {
 
         System.out.println(family);
 
-        child.greetPet(father);
+        mother.greetPet();
         child.describePet();
     }
 }

@@ -9,6 +9,15 @@ public final class Man extends Human {
         super(name, surname, year, IQ);
     }
 
+    @Override
+    public void greetPet() {
+        if (getFamily() != null && getFamily().getPet() != null) {
+            System.out.printf("Hello my friend %s \n", getFamily().getPet().getNickName());
+        } else {
+            System.out.println("Family doesn't have a pet");
+        }
+    }
+
     public void repairCar() {
         System.out.println("A man's car is cleaner than a woman's house.");
     }
