@@ -1,8 +1,10 @@
 package az.edu.strangers;
 
+import java.util.Set;
+
 public class Dog extends Pet implements Foulable {
 
-    public Dog(String nickName, Integer age, Integer trickLevel, String[] habits) {
+    public Dog(String nickName, Integer age, Integer trickLevel, Set<String> habits) {
         super(nickName, age, trickLevel, habits);
         this.species = Species.getSpecies("Dog");
     }

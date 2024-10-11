@@ -1,7 +1,9 @@
 package az.edu.strangers;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Pet {
 
@@ -9,7 +11,8 @@ public abstract class Pet {
     protected String nickName;
     protected Integer age;
     protected Integer trickLevel;
-    protected String[] habits;
+    protected Set<String> habits;
+
 
     public Pet() {
     }
@@ -19,7 +22,7 @@ public abstract class Pet {
         this.nickName = nickName;
     }
 
-    public Pet(String nickName, Integer age, Integer trickLevel, String[] habits) {
+    public Pet(String nickName, Integer age, Integer trickLevel, Set<String> habits) {
         this.nickName = nickName;
         this.age = age;
         this.trickLevel = trickLevel;
@@ -68,17 +71,17 @@ public abstract class Pet {
         this.trickLevel = trickLevel;
     }
 
-    public String[] getHabits() {
+    public Set<String> getHabits() {
         return habits;
     }
 
-    public void setHabits(String[] habits) {
+    public void setHabits(Set<String> habits) {
         this.habits = habits;
     }
 
     public String toString() {
         return "%s{nickname='%s', age=%d, trickLevel=%d, habits=%s}"
-                .formatted(species, nickName, age, trickLevel, Arrays.toString(habits));
+                .formatted(species, nickName, age, trickLevel, habits);
     }
 
     @Override
@@ -90,13 +93,12 @@ public abstract class Pet {
                 Objects.equals(nickName, pet.nickName) &&
                 Objects.equals(age, pet.age) &&
                 Objects.equals(trickLevel, pet.trickLevel) &&
-                Arrays.equals(habits, pet.habits);
+                Objects.equals(habits, pet.habits);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(species, nickName, age, trickLevel);
-        result = 31 * result + Arrays.hashCode(habits);
+        int result = Objects.hash(species, nickName, age, trickLevel, habits);
         return result;
     }
 }

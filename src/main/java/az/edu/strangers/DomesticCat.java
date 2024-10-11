@@ -1,9 +1,14 @@
 package az.edu.strangers;
 
+import java.util.Set;
+
 public class DomesticCat extends Pet implements Foulable {
 
-    public DomesticCat(String nickName, Integer age, Integer trickLevel, String[] habits) {
-        super(nickName, age, trickLevel, habits);
+    public DomesticCat(String nickName, Integer age, Integer trickLevel, Set<String> habits) {
+        this.nickName = nickName;
+        this.age = age;
+        this.trickLevel = trickLevel;
+        this.habits = habits;
         this.species = Species.getSpecies("Cat");
     }
 

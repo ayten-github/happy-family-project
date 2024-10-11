@@ -3,6 +3,11 @@ package az.edu.strangers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FamilyTest {
@@ -18,10 +23,15 @@ class FamilyTest {
         mother = new Human("Jane", "Karleone", 1975);
         father = new Human("Vito", "Karleone", 1973);
         family = new Family(mother, father);
-        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
+        Set<String> habits = new HashSet<>();
+        habits.add("Sleep");
+        habits.add("Run");
+        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[] {"eat" , "sleep"});
         family.setPet(pet);
 
-        String[][] schedule = {{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
+        Map<DayOfWeek , String> schedule = new HashMap<>();
+        schedule.put(DayOfWeek.MONDAY, "Go to School");
+        schedule.put(DayOfWeek.TUESDAY, "Play football");
         child = new Human("Michael", "Karleone", 1999, 90, schedule, family);
     }
 

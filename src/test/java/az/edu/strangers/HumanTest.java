@@ -3,6 +3,8 @@ package az.edu.strangers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HumanTest {
@@ -10,7 +12,7 @@ class HumanTest {
     private Human human;
     private Pet pet;
     private Family family;
-    private String[][] schedule;
+    private Map<String, String> schedule;
 
     @BeforeEach
     void setUp() {
@@ -19,7 +21,7 @@ class HumanTest {
         Human father = new Human("Vito", "Karleone", 1973);
         family = new Family(mother, father);
         family.setPet(pet);
-        schedule = new String[][]{{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
+        schedule = new Map<String , String>(){{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
         human = new Human("Michael", "Karleone", 1999, 90, schedule, family);
     }
 
@@ -29,7 +31,7 @@ class HumanTest {
         assertEquals("Karleone", human.getSurname());
         assertEquals(1999, human.getYear());
         assertEquals(90, human.getIQ());
-        assertArrayEquals(schedule, human.getSchedule());
+        assertEquals(schedule, human.getSchedule());
     }
 
     @Test
