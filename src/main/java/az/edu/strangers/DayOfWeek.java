@@ -1,5 +1,7 @@
 package az.edu.strangers;
 
+import java.util.Random;
+
 public enum DayOfWeek {
     SUNDAY,
     MONDAY,
@@ -8,4 +10,6 @@ public enum DayOfWeek {
     THURSDAY,
     FRIDAY,
     SATURDAY;
+
+
 }

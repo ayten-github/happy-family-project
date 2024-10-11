@@ -1,5 +1,4 @@
 package az.edu.strangers;
-
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -28,6 +27,13 @@ public class Human {
         this.IQ = IQ;
         this.schedule = schedule;
         this.family = family;
+    }
+
+    public Human(String name, String surname, Integer year, Integer IQ) {
+        this.name = name;
+        this.surname = surname;
+        this.year = year;
+        this.IQ = IQ;
     }
 
     public String getName() {
@@ -80,7 +86,7 @@ public class Human {
 
     public void greetPet() {
         if (family != null && family.getPet() != null) {
-            System.out.printf("Hello, %s /n", family.getPet().getNickName());
+            System.out.printf("Hello  %s \n", family.getPet().getNickName());
         } else {
             System.out.println("Family doesn't have a pet");
         }
@@ -111,4 +117,6 @@ public class Human {
         result = 31 * result + Arrays.deepHashCode(schedule);
         return result;
     }
+
+
 }

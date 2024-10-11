@@ -1,15 +1,19 @@
 package az.edu.strangers;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
-public class Family {
+public class Family implements HumanCreator {
 
     private Human father;
     private Human mother;
     private Pet pet;
     private Human[] children;
     private Integer childrenCount;
+
+    private Random random;
 
     static {
         System.out.println("Class Family is being loaded.");
@@ -27,6 +31,7 @@ public class Family {
         childrenCount = 0;
         mother.setFamily(this);
         father.setFamily(this);
+        this.random = new Random();
     }
 
     public Human getFather() {
@@ -74,7 +79,9 @@ public class Family {
         this.children[childrenCount] = child;
         child.setFamily(this);
         childrenCount++;
+
     }
+
 
     public boolean deleteChild(int index) {
         if (index >= 0 && index < children.length) {
@@ -108,6 +115,32 @@ public class Family {
     }
 
     @Override
+    public Human bornChild() {
+        String[] boyNames = {"Alex", "Jord", "Mike"};
+        String[] girlNames = {"Alina", "Julia", "Mia"};
+
+        boolean isMan = random.nextBoolean();
+
+        Integer childIQ = (getFather().getIQ() + getMother().getIQ()) / 2;
+
+        String name;
+        if (isMan) {
+            name = boyNames[random.nextInt(boyNames.length)];
+            Man man = new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+            this.addChild(man);
+            return man;
+
+        } else {
+            name = girlNames[random.nextInt(boyNames.length)];
+            Woman woman = new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+            this.addChild(woman);
+            return woman;
+
+        }
+
+    }
+
+    @Override
     public String toString() {
         return String.format("Family{mother=%s, father=%s, children=%s, pet=%s", father != null ? "%s %s".formatted(father.getName(), father.getSurname()) : "null", mother != null ? "%s %s".formatted(mother.getName(), mother.getSurname()) : "null", Arrays.toString(children), pet != null ? getPet().toString() : "null");
     }
@@ -126,4 +159,6 @@ public class Family {
         result = 31 * result + Arrays.hashCode(children);
         return result;
     }
+
+
 }
