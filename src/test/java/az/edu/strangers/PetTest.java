@@ -3,6 +3,9 @@ package az.edu.strangers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PetTest {
@@ -11,16 +14,22 @@ class PetTest {
 
     @BeforeEach
     void setUp() {
-        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
+        Set<String> habits = new HashSet<>();
+        habits.add("sleep");
+        habits.add("eat");
+        pet = new Dog( "Rock", 5, 75, habits);
     }
 
     @Test
     void testConstructor() {
-        assertEquals("dog", pet.getSpecies());
+        Set<String> habits = new HashSet<>();
+        habits.add("sleep");
+        habits.add("eat");
+        assertEquals("dog", pet.getSpecies().name());
         assertEquals("Rock", pet.getNickName());
         assertEquals(5, pet.getAge());
         assertEquals(75, pet.getTrickLevel());
-        assertArrayEquals(new String[]{"eat", "sleep"}, pet.getHabits());
+        assertEquals(habits, pet.getHabits());
     }
 
     @Test
@@ -31,7 +40,10 @@ class PetTest {
 
     @Test
     void testEqualsAndHashCode() {
-        Pet pet2 = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
+        Set<String> habits = new HashSet<>();
+        habits.add("sleep");
+        habits.add("eat");
+        Pet pet2 = new Dog( "Rock", 5, 75, habits);
         assertEquals(pet, pet2);
         assertEquals(pet.hashCode(), pet2.hashCode());
     }

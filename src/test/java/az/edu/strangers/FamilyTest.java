@@ -3,6 +3,11 @@ package az.edu.strangers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FamilyTest {
@@ -15,35 +20,40 @@ class FamilyTest {
 
     @BeforeEach
     void setUp() {
+        Set<String> habits = new HashSet<>();
+        habits.add("sleep");
+        habits.add("eat");
         mother = new Human("Jane", "Karleone", 1975);
         father = new Human("Vito", "Karleone", 1973);
         family = new Family(mother, father);
-        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
+        pet = new Dog( "Rock", 5, 75, habits);
         family.setPet(pet);
 
-        String[][] schedule = {{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
+        Map<DayOfWeek , String> schedule = new HashMap<>();
+        schedule.put(DayOfWeek.MONDAY , "Go to school");
+        schedule.put(DayOfWeek.TUESDAY , "Play football");
         child = new Human("Michael", "Karleone", 1999, 90, schedule, family);
     }
 
     @Test
     void testAddChild() {
         family.addChild(child);
-        assertEquals(1, family.getChildren().length);
-        assertSame(child, family.getChildren()[0]);
+        assertEquals(1, family.getChildren().size());
+        assertSame(child, family.getChildren().get(0));
     }
 
     @Test
     void testDeleteChildByIndex() {
         family.addChild(child);
-        assertTrue(family.deleteChild(0));
-        assertEquals(0, family.getChildren().length);
+        assertTrue(family.deleteChild(0).isPresent());
+        assertEquals(0, family.getChildren().size());
     }
 
     @Test
     void testDeleteChildByHumanInput() {
         family.addChild(child);
         assertTrue(family.deleteChild(child));
-        assertEquals(0, family.getChildren().length);
+        assertEquals(0, family.getChildren().size());
     }
 
     @Test
