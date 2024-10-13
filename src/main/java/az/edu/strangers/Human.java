@@ -13,7 +13,7 @@ public class Human {
     private Integer IQ;
     private Map<DayOfWeek, String> schedule;
     private Family family;
-    private FamilyDto familyDto;
+//    private FamilyDto familyDto;
 
     public Human() {
     }
@@ -88,13 +88,13 @@ public class Human {
         this.family = family;
     }
 
-    public FamilyDto getFamilyDto() {
-        return familyDto;
-    }
-
-    public void setFamilyDto(FamilyDto familyDto) {
-        this.familyDto = familyDto;
-    }
+//    public FamilyDto getFamilyDto() {
+//        return familyDto;
+//    }
+//
+//    public void setFamilyDto(FamilyDto familyDto) {
+//        this.familyDto = familyDto;
+//    }
 
     public void greetPet() {
         if (family != null && family.getPet() != null) {

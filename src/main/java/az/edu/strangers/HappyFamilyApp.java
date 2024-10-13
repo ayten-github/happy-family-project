@@ -47,7 +47,7 @@ public class HappyFamilyApp {
 //        child.describePet();
 
         //DAO
-        FamilyDao<Family> familyDao =
+        FamilyDao familyDao =
                 new CollectionFamilyDao();
 
         //Service
@@ -58,12 +58,14 @@ public class HappyFamilyApp {
         FamilyController familyController =
                 new FamilyController(familyService);
 
-        familyController.getAllStudents();
-
         FamilyDto createdFamily = familyController.createNewFamily(new ManDto("Vito", "Karleone", 1973),
                 new WomanDto("Jane", "Karleone", 1975));
 
-        System.out.println(createdFamily);
+        familyController.getAllFamilies();
+
+        familyController.bornChild(createdFamily,"Ronaldo","Georgina");
+
+        familyController.getAllFamilies();
 
     }
 }

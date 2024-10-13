@@ -18,8 +18,8 @@ public class FamilyDto {
         this.father = father;
         this.mother = mother;
         this.children = new ArrayList<>();
-        mother.setFamilyDto(this);
-        father.setFamilyDto(this);
+//        mother.setFamily(this);
+//        father.setFamily(this);
     }
 
     @Override
@@ -30,5 +30,37 @@ public class FamilyDto {
                 ", pet=" + pet +
                 ", children=" + children +
                 '}';
+    }
+
+    public Human getFather() {
+        return father;
+    }
+
+    public void setFather(Human father) {
+        this.father = father;
+    }
+
+    public Human getMother() {
+        return mother;
+    }
+
+    public void setMother(Human mother) {
+        this.mother = mother;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public List<Human> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Human> children) {
+        this.children = children;
     }
 }

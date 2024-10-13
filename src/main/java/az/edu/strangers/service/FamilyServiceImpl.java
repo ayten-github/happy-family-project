@@ -4,17 +4,19 @@ import az.edu.strangers.*;
 import az.edu.strangers.dao.Family;
 import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
+import az.edu.strangers.dto.HumanDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class FamilyServiceImpl implements FamilyService{
 
-    private final FamilyDao<Family> familyDao;
+    private final FamilyDao familyDao;
 
-    public FamilyServiceImpl(FamilyDao<Family> familyDao) {
+    public FamilyServiceImpl(FamilyDao familyDao) {
         this.familyDao = familyDao;
     }
 
@@ -33,7 +35,6 @@ public class FamilyServiceImpl implements FamilyService{
 
     @Override
     public void displayAllFamilies() {
-
     }
 
     @Override
@@ -52,8 +53,8 @@ public class FamilyServiceImpl implements FamilyService{
     }
 
     @Override
-    public FamilyDto createNewFamily(ManDto man, WomanDto women) {
-        Woman mother = new Woman(women.getName(), women.getSurname(), women.getYear());
+    public FamilyDto createNewFamily(ManDto man, WomanDto woman) {
+        Woman mother = new Woman(woman.getName(), woman.getSurname(), woman.getYear());
         Man father = new Man(man.getName(), man.getSurname(), man.getYear());
 
         Family familyEntity = new Family(father, mother);
@@ -69,8 +70,33 @@ public class FamilyServiceImpl implements FamilyService{
     }
 
     @Override
-    public Family bornChild(Family family, String masculineName, String feminineName) {
-        return null;
+    public FamilyDto bornChild(FamilyDto familyDto, String masculineName, String feminineName) {
+        Human father = familyDto.getFather();
+
+        boolean isBoy = Math.random() < 0.5;
+
+        String surname = father.getSurname();
+        int birthYear = java.time.Year.now().getValue();
+
+        Human newbornChild;
+        if (isBoy) {
+            newbornChild = new Man(masculineName, surname, birthYear);
+        } else {
+            newbornChild = new Woman(feminineName, surname, birthYear);
+        }
+
+        List<Human> children = familyDto.getChildren();
+        if (children == null) {
+            children = new ArrayList<>();
+        }
+        children.add(newbornChild);
+        familyDto.setChildren(children);
+
+        System.out.println("New child born: " + newbornChild.getName() + " " + newbornChild.getSurname());
+
+        familyDao.updateFamily(familyDto, 0L);
+
+        return familyDto;
     }
 
     @Override

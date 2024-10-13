@@ -1,17 +1,21 @@
 package az.edu.strangers.dao;
 
+import az.edu.strangers.dto.FamilyDto;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface FamilyDao<T> {
+public interface FamilyDao {
 
-    List<T> getAllFamilies();
+    List<Family> getAllFamilies();
 
-    Optional<T> getFamilyByIndex(long id);
+    Optional<Family> getFamilyByIndex(long id);
 
-    boolean deleteFamily(long id);
+    boolean deleteFamily(Long id);
 
-    boolean deleteFamily(T t);
+    boolean deleteFamily(Family family);
 
-    T saveFamily(T t);
+    Family saveFamily(Family family);
+
+    Family updateFamily(FamilyDto familyDto, Long index);
 }
