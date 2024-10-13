@@ -3,6 +3,11 @@ package az.edu.strangers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HumanTest {
@@ -10,16 +15,21 @@ class HumanTest {
     private Human human;
     private Pet pet;
     private Family family;
-    private String[][] schedule;
+    private Map<DayOfWeek , String> schedule;
 
     @BeforeEach
     void setUp() {
-        pet = new Pet(Species.DOG, "Rock", 5, 75, new String[]{"eat", "sleep"});
+        Set<String> habits = new HashSet<>();
+        habits.add("sleep");
+        habits.add("eat");
+        pet = new Dog( "Rock", 5, 75, habits);
         Human mother = new Human("Jane", "Karleone", 1975);
         Human father = new Human("Vito", "Karleone", 1973);
-        family = new Family(mother, father);
+        family = new Family(father, mother);
         family.setPet(pet);
-        schedule = new String[][]{{"Monday", "Go to school"}, {"Tuesday", "Play football"}};
+        schedule = new HashMap<>();
+        schedule.put(DayOfWeek.MONDAY , "Go to school");
+        schedule.put(DayOfWeek.TUESDAY , "Play football");
         human = new Human("Michael", "Karleone", 1999, 90, schedule, family);
     }
 
@@ -29,7 +39,7 @@ class HumanTest {
         assertEquals("Karleone", human.getSurname());
         assertEquals(1999, human.getYear());
         assertEquals(90, human.getIQ());
-        assertArrayEquals(schedule, human.getSchedule());
+        assertEquals(schedule, human.getSchedule());
     }
 
     @Test
@@ -55,7 +65,7 @@ class HumanTest {
 
     @Test
     void testToString() {
-        String expected = "Human{name='Michael', surname='Karleone', year=1999, iq=90, schedule=[[Monday, Go to school], [Tuesday, Play football]]}";
+        String expected = "Human{name='Michael', surname='Karleone', year=1999, iq=90, schedule={TUESDAY=Play football, MONDAY=Go to school}}";
         assertEquals(expected, human.toString());
     }
 
