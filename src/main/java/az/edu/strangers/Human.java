@@ -1,5 +1,6 @@
 package az.edu.strangers;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 public class Human {
@@ -8,7 +9,7 @@ public class Human {
     private String surname;
     private Integer year;
     private Integer IQ;
-    private String[][] schedule;
+    private Map<DayOfWeek, String> schedule;
     private Family family;
 
     public Human() {
@@ -20,7 +21,7 @@ public class Human {
         this.year = year;
     }
 
-    public Human(String name, String surname, Integer year, Integer IQ, String[][] schedule, Family family) {
+    public Human(String name, String surname, Integer year, Integer IQ, Map<DayOfWeek, String> schedule, Family family) {
         this.name = name;
         this.surname = surname;
         this.year = year;
@@ -68,11 +69,11 @@ public class Human {
         this.IQ = IQ;
     }
 
-    public String[][] getSchedule() {
+    public Map<DayOfWeek, String> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(String[][] schedule) {
+    public void setSchedule(Map<DayOfWeek, String> schedule) {
         this.schedule = schedule;
     }
 
@@ -100,7 +101,7 @@ public class Human {
     }
 
     public String toString() {
-        return "Human{name='%s', surname='%s', year=%d, iq=%s, schedule=%s}".formatted(name, surname, year, IQ, Arrays.deepToString(schedule));
+        return "Human{name='%s', surname='%s', year=%d, iq=%s, schedule=%s}".formatted(name, surname, year, IQ, schedule);
     }
 
     @Override
@@ -108,15 +109,13 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(year, human.year) && Objects.equals(IQ, human.IQ) && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Arrays.deepEquals(schedule, human.schedule);
+        return Objects.equals(year, human.year) && Objects.equals(IQ, human.IQ) && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.deepEquals(schedule, human.schedule);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(name, surname, year, IQ);
-        result = 31 * result + Arrays.deepHashCode(schedule);
+        int result = Objects.hash(name, surname, year, IQ, schedule);
+
         return result;
     }
-
-
 }
