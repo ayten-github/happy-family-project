@@ -1,5 +1,7 @@
 package az.edu.strangers;
-import java.util.Arrays;
+import az.edu.strangers.dao.Family;
+import az.edu.strangers.dto.FamilyDto;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class Human {
     private Integer IQ;
     private Map<DayOfWeek, String> schedule;
     private Family family;
+    private FamilyDto familyDto;
 
     public Human() {
     }
@@ -85,6 +88,14 @@ public class Human {
         this.family = family;
     }
 
+    public FamilyDto getFamilyDto() {
+        return familyDto;
+    }
+
+    public void setFamilyDto(FamilyDto familyDto) {
+        this.familyDto = familyDto;
+    }
+
     public void greetPet() {
         if (family != null && family.getPet() != null) {
             System.out.printf("Hello  %s \n", family.getPet().getNickName());
@@ -100,8 +111,12 @@ public class Human {
         }
     }
 
-    public String toString() {
+    public String toStringV2() {
         return "Human{name='%s', surname='%s', year=%d, iq=%s, schedule=%s}".formatted(name, surname, year, IQ, schedule);
+    }
+
+    public String toString() {
+        return "Human{name='%s', surname='%s', year=%d}".formatted(name, surname, year);
     }
 
     @Override
