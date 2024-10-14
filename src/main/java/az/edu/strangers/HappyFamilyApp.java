@@ -26,7 +26,7 @@ public class HappyFamilyApp {
         father.repairCar();
         mother.makeUp();
 
-        Family family = new Family(mother, father);
+        Family family = new Family(father, mother);
         family.setPet(dog);
 
         Map<DayOfWeek , String> schedule = new HashMap<>();

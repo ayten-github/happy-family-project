@@ -115,9 +115,9 @@ public class Family implements HumanCreator {
 
     @Override
     public String toString() {
-        return String.format("Family{mother=%s, father=%s, children=%s, pet=%s",
-                father != null ? "%s %s".formatted(father.getName(), father.getSurname()) : "null",
+        return String.format("Family{mother=%s, father=%s, children=%s, pet=%s}",
                 mother != null ? "%s %s".formatted(mother.getName(), mother.getSurname()) : "null",
+                father != null ? "%s %s".formatted(father.getName(), father.getSurname()) : "null",
                 children, pet != null ? getPet().toString() : "null");
     }
 
