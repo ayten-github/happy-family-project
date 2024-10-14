@@ -1,5 +1,6 @@
 package az.edu.strangers;
 
+import az.edu.strangers.dao.Family;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

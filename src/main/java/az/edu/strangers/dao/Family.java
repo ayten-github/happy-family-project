@@ -1,4 +1,6 @@
-package az.edu.strangers;
+package az.edu.strangers.dao;
+
+import az.edu.strangers.*;
 
 import java.time.LocalDate;
 import java.util.*;
