@@ -80,6 +80,7 @@ public class Family implements HumanCreator {
         if (!children.contains(child)) return false;
 
         Human removedChild = children.get(children.indexOf(child));
+        children.remove(child);
         removedChild.setFamily(null);
         return true;
     }
