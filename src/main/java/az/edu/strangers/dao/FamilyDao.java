@@ -17,5 +17,5 @@ public interface FamilyDao {
 
     Family saveFamily(Family family);
 
-    Family updateFamily(FamilyDto familyDto, Long index);
+    Family updateFamily(FamilyDto familyDto);
 }

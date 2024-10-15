@@ -5,6 +5,7 @@ import az.edu.strangers.Pet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class FamilyDto {
@@ -59,4 +60,19 @@ public class FamilyDto {
     public void setChildren(List<Human> children) {
         this.children = children;
     }
+    @Override
+    public  int hashCode(){
+        return Objects.hash(father,mother,children,pet);
+    }
+    @Override
+    public boolean equals(Object object){
+        if (this==object) return true;
+        if (object==null|| getClass()!=object.getClass()) return false;
+        FamilyDto familyDto=(FamilyDto) object;
+        return Objects.equals(father,familyDto.father)&&
+                Objects.equals(mother,familyDto.mother)&&
+                Objects.equals(children,familyDto.children)&&
+                Objects.equals(pet,familyDto.pet);
+    }
+
 }
