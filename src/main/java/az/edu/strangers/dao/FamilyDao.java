@@ -11,11 +11,11 @@ public interface FamilyDao {
 
     Optional<Family> getFamilyByIndex(long id);
 
-    boolean deleteFamily(Long id);
+    boolean deleteFamily(int id);
 
     boolean deleteFamily(Family family);
 
     Family saveFamily(Family family);
 
-    Family updateFamily(FamilyDto familyDto, Long index);
+    Family updateFamily(FamilyDto familyDto);
 }

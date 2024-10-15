@@ -69,6 +69,7 @@ public class Family implements HumanCreator {
         child.setFamily(this);
     }
 
+
     public Optional<Human> deleteChild(int index) {
         if (index >= children.size() || index < 0) return Optional.empty();
 

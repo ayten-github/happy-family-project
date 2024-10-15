@@ -8,11 +8,13 @@ import az.edu.strangers.dto.HumanDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class FamilyServiceImpl implements FamilyService{
+public class FamilyServiceImpl implements FamilyService {
 
     private final FamilyDao familyDao;
 
@@ -21,35 +23,38 @@ public class FamilyServiceImpl implements FamilyService{
     }
 
     @Override
-    public void getAllFamilies() {
-        List<Family> familyList = familyDao.getAllFamilies();
-        if (familyList.isEmpty()){
-            System.out.println("There is no family!");
-        } else {
-            System.out.println("Students in List:");
-            for (Family family : familyList) {
-                System.out.println(family);
-            }
-        }
+    public List<Family> getAllFamilies() {
+        return familyDao.getAllFamilies();
     }
 
     @Override
     public void displayAllFamilies() {
+        List<Family> familyList = familyDao.getAllFamilies();
+        for (int i = 0; i < familyList.size(); i++) {
+            System.out.println(familyList.get(i).toString());
+        }
+
     }
 
     @Override
     public List<Family> getFamiliesBiggerThan(Integer number) {
-        return null;
+        List<Family> familyList = getAllFamilies();
+        return familyList.stream().filter(family -> family.getFamilyCount() > number)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Family> getFamiliesLessThan(Integer number) {
-        return null;
+        List<Family> familyList = getAllFamilies();
+        return familyList.stream().filter(family -> family.getFamilyCount() < number)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Long countFamiliesWithMemberNumber(Integer number) {
-        return null;
+        List<Family> familyList = getAllFamilies();
+        return familyList.stream().filter(family -> family.getFamilyCount() == number)
+                .count();
     }
 
     @Override
@@ -61,12 +66,12 @@ public class FamilyServiceImpl implements FamilyService{
 
         Family savedFamily = familyDao.saveFamily(familyEntity);
 
-        return new FamilyDto(savedFamily.getFather(),savedFamily.getMother());
+        return new FamilyDto(savedFamily.getFather(), savedFamily.getMother());
     }
 
     @Override
-    public void deleteFamilyByIndex(Long index) {
-
+    public boolean deleteFamilyByIndex(int index) {
+        return familyDao.deleteFamily(index);
     }
 
     @Override
@@ -94,38 +99,53 @@ public class FamilyServiceImpl implements FamilyService{
 
         System.out.println("New child born: " + newbornChild.getName() + " " + newbornChild.getSurname());
 
-        familyDao.updateFamily(familyDto, 0L);
+        familyDao.updateFamily(familyDto);
 
         return familyDto;
     }
 
     @Override
-    public Family adoptChild(Family family, Human child) {
-        return null;
+    public Optional<Family> adoptChild(Family family, Human child) {
+        if (family == null || child == null) return Optional.empty();
+        family.addChild(child);
+        return Optional.of(family);
     }
 
     @Override
     public void deleteAllChildrenOlderThen(Integer age) {
-
+        List<Family> familyList = getAllFamilies();
+        int nowYear = LocalDate.now().getYear();
+        familyList.forEach(family -> {
+            List<Human> olderChildren = family.getChildren().stream().filter(child -> (nowYear - child.getYear()) <= age)
+                    .collect(Collectors.toList());
+            family.setChildren(olderChildren);
+        });
     }
 
     @Override
     public Long count() {
-        return null;
+        return (long) familyDao.getAllFamilies().size();
     }
 
     @Override
     public Optional<Family> getFamilyById(Long index) {
-        return Optional.empty();
+        List<Family> familyList = familyDao.getAllFamilies();
+        return index == null || familyList.size() <= index ? Optional.empty() :
+                Optional.of(familyList.get(index.intValue()));
     }
 
     @Override
-    public List<Pet> getPets(Long index) {
-        return null;
+    public Optional<Pet> getPets(Long index) {
+        List<Family> familyList = familyDao.getAllFamilies();
+        return (index >= familyList.size() || index < 0) ? Optional.empty() :
+                Optional.of(familyList.get(index.intValue()).getPet());
     }
 
     @Override
-    public void addPet(Long index, Pet pet) {
-
+    public boolean addPet(final Long index, final Pet pet) {
+        if (familyDao.getAllFamilies().size() <= index || index < 0 || pet == null) return false;
+        Family family = familyDao.getAllFamilies().get(index.intValue());
+        family.setPet(pet);
+        return true;
     }
 }
