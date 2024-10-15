@@ -25,13 +25,15 @@ public class CollectionFamilyDao implements FamilyDao{
     }
 
     @Override
-    public boolean deleteFamily(Long id) {
-        return false;
+    public boolean deleteFamily(int id) {
+        if(id<0||id>=FAMILY_LIST.size()) return false;
+        FAMILY_LIST.remove(id);
+        return true;
     }
 
     @Override
     public boolean deleteFamily(Family family) {
-        return false;
+        return false;//not modified
     }
 
     @Override

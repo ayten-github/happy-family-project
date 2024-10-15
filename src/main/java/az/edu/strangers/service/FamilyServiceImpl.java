@@ -70,12 +70,8 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public boolean deleteFamilyByIndex(Long index) {
-        List<Family> familyList = familyDao.getAllFamilies();
-        if (index < 0 || index > familyList.size()) return false;
-        System.out.println(familyList.remove(index.intValue()));
-       // familyDao.updateFamily(FamilyDto);
-        return true;
+    public boolean deleteFamilyByIndex(int index) {
+        return familyDao.deleteFamily(index);
     }
 
     @Override
@@ -124,7 +120,6 @@ public class FamilyServiceImpl implements FamilyService {
                     .collect(Collectors.toList());
             family.setChildren(olderChildren);
         });
-
     }
 
     @Override

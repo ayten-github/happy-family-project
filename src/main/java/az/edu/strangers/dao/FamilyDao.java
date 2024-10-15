@@ -11,7 +11,7 @@ public interface FamilyDao {
 
     Optional<Family> getFamilyByIndex(long id);
 
-    boolean deleteFamily(Long id);
+    boolean deleteFamily(int id);
 
     boolean deleteFamily(Family family);
 

@@ -23,7 +23,7 @@ public interface FamilyService {
 
     FamilyDto createNewFamily(ManDto man, WomanDto woman);
 
-    boolean deleteFamilyByIndex(Long index);
+    boolean deleteFamilyByIndex(int index);
 
     FamilyDto bornChild(FamilyDto family, String masculineName, String feminineName);
 
