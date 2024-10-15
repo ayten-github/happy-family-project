@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface FamilyService {
 
-    void getAllFamilies();
+    List<Family> getAllFamilies();
 
     void displayAllFamilies();
 
@@ -23,7 +23,7 @@ public interface FamilyService {
 
     FamilyDto createNewFamily(ManDto man, WomanDto woman);
 
-    void deleteFamilyByIndex(Long index);
+    boolean deleteFamilyByIndex(Long index);
 
     FamilyDto bornChild(FamilyDto family, String masculineName, String feminineName);
 
@@ -35,7 +35,7 @@ public interface FamilyService {
 
     Optional<Family> getFamilyById(Long index);
 
-    List<Pet> getPets(Long index);
+    Optional<Pet> getPets(Long index);
 
-    void addPet(Long index, Pet pet);
+    boolean addPet(Long index, Pet pet);
 }

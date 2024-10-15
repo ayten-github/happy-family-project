@@ -11,6 +11,7 @@ import az.edu.strangers.dto.WomanDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FamilyServiceImpl implements FamilyService{
 
@@ -21,35 +22,38 @@ public class FamilyServiceImpl implements FamilyService{
     }
 
     @Override
-    public void getAllFamilies() {
-        List<Family> familyList = familyDao.getAllFamilies();
-        if (familyList.isEmpty()){
-            System.out.println("There is no family!");
-        } else {
-            System.out.println("Students in List:");
-            for (Family family : familyList) {
-                System.out.println(family);
-            }
-        }
+    public List<Family> getAllFamilies() {
+        return familyDao.getAllFamilies();
     }
 
     @Override
     public void displayAllFamilies() {
+        List<Family> familyList= familyDao.getAllFamilies();
+        for (int i = 0; i < familyList.size(); i++) {
+            System.out.println(familyList.get(i).toString());
+        }
+
     }
 
     @Override
     public List<Family> getFamiliesBiggerThan(Integer number) {
-        return null;
+        List<Family> familyList=getAllFamilies();
+        return familyList.stream().filter(family -> family.getFamilyCount()>number)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Family> getFamiliesLessThan(Integer number) {
-        return null;
+        List<Family> familyList=getAllFamilies();
+        return familyList.stream().filter(family -> family.getFamilyCount()<number)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Long countFamiliesWithMemberNumber(Integer number) {
-        return null;
+        List<Family> familyList=getAllFamilies();
+        return familyList.stream().filter(family -> family.getFamilyCount()==number)
+                .count();
     }
 
     @Override
@@ -65,8 +69,11 @@ public class FamilyServiceImpl implements FamilyService{
     }
 
     @Override
-    public void deleteFamilyByIndex(Long index) {
-
+    public boolean deleteFamilyByIndex(Long index) {
+        List<Family> familyList=familyDao.getAllFamilies();
+        if(index<0||index>familyList.size()) return false;
+        System.out.println(familyList.remove(index.intValue()));
+        return true;
     }
 
     @Override
@@ -101,31 +108,47 @@ public class FamilyServiceImpl implements FamilyService{
 
     @Override
     public Family adoptChild(Family family, Human child) {
-        return null;
+        if(family==null||child==null) return null;
+        family.addChild(child);
+        return family;
     }
 
     @Override
     public void deleteAllChildrenOlderThen(Integer age) {
+        List<Family> familyList=getAllFamilies();
+        familyList.forEach(family -> {
+            List<Human> olderChildren=family.getChildren().stream().filter(child->child.getYear()<=age)
+                    .collect(Collectors.toList());
+            family.setChildren(olderChildren);
+          //  familyDao.updateFamily(familyDao);
+        });
 
     }
 
     @Override
     public Long count() {
-        return null;
+        return (long)familyDao.getAllFamilies().size();
     }
 
     @Override
     public Optional<Family> getFamilyById(Long index) {
-        return Optional.empty();
+        List<Family> familyList=familyDao.getAllFamilies();
+        return index==null||familyList.size()<=index? Optional.empty():
+        Optional.of(familyList.get(index.intValue()));
     }
 
     @Override
-    public List<Pet> getPets(Long index) {
-        return null;
+    public Optional<Pet> getPets(Long index) {
+        List<Family> familyList=familyDao.getAllFamilies();
+        return index>= familyList.size()? Optional.empty():
+                Optional.of(familyList.get(index.intValue()).getPet());
     }
 
     @Override
-    public void addPet(Long index, Pet pet) {
-
+    public boolean addPet(final Long index,final Pet pet) {
+        List<Family> familyList=familyDao.getAllFamilies();
+        if (familyList.size()<=index||index<0) return false;
+        familyList.get(index.intValue());
+        return true;
     }
 }

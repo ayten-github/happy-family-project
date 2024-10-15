@@ -24,12 +24,8 @@ public class FamilyDto {
 
     @Override
     public String toString() {
-        return "FamilyDto{" +
-                "father=" + father +
-                ", mother=" + mother +
-                ", pet=" + pet +
-                ", children=" + children +
-                '}';
+        return "FamilyDto{father=%s, mother=%s, pet=%s, children=%s}"
+                .formatted(father, mother, pet, children);
     }
 
     public Human getFather() {
