@@ -27,7 +27,7 @@ public interface FamilyService {
 
     FamilyDto bornChild(FamilyDto family, String masculineName, String feminineName);
 
-    Family adoptChild(Family family, Human child);
+    Optional<Family> adoptChild(Family family, Human child);
 
     void deleteAllChildrenOlderThen(Integer age);
 

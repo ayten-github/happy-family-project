@@ -8,6 +8,7 @@ import az.edu.strangers.dto.HumanDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -107,20 +108,20 @@ public class FamilyServiceImpl implements FamilyService{
     }
 
     @Override
-    public Family adoptChild(Family family, Human child) {
-        if(family==null||child==null) return null;
+    public Optional<Family> adoptChild(Family family, Human child) {
+        if(family==null||child==null) return Optional.empty();
         family.addChild(child);
-        return family;
+        return Optional.of(family);
     }
 
     @Override
     public void deleteAllChildrenOlderThen(Integer age) {
         List<Family> familyList=getAllFamilies();
+        int nowYear= LocalDate.now().getYear();
         familyList.forEach(family -> {
-            List<Human> olderChildren=family.getChildren().stream().filter(child->child.getYear()<=age)
+            List<Human> olderChildren=family.getChildren().stream().filter(child->(nowYear-child.getYear())<=age)
                     .collect(Collectors.toList());
             family.setChildren(olderChildren);
-          //  familyDao.updateFamily(familyDao);
         });
 
     }
@@ -140,15 +141,15 @@ public class FamilyServiceImpl implements FamilyService{
     @Override
     public Optional<Pet> getPets(Long index) {
         List<Family> familyList=familyDao.getAllFamilies();
-        return index>= familyList.size()? Optional.empty():
+        return (index>= familyList.size()||index<0)? Optional.empty():
                 Optional.of(familyList.get(index.intValue()).getPet());
     }
 
     @Override
     public boolean addPet(final Long index,final Pet pet) {
-        List<Family> familyList=familyDao.getAllFamilies();
-        if (familyList.size()<=index||index<0) return false;
-        familyList.get(index.intValue());
+        if (familyDao.getAllFamilies().size()<=index||index<0||pet==null) return false;
+        Family family=familyDao.getAllFamilies().get(index.intValue());
+        family.setPet(pet);
         return true;
     }
 }
