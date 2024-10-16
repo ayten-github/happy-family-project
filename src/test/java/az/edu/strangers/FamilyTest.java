@@ -28,7 +28,7 @@ class FamilyTest {
         father = new Human("Vito", "Karleone", 1973);
         family = new Family(father, mother);
         pet = new Dog( "Rock", 5, 75, habits);
-        family.setPet(pet);
+        family.addPet(pet);
 
         Map<DayOfWeek , String> schedule = new HashMap<>();
         schedule.put(DayOfWeek.MONDAY , "Go to school");
@@ -66,14 +66,14 @@ class FamilyTest {
     @Test
     void testToString() {
         family.addChild(child);
-        String expected = "Family{mother=Jane Karleone, father=Vito Karleone, children=[Human{name='Michael', surname='Karleone', year=1999, iq=90, schedule={TUESDAY=Play football, MONDAY=Go to school}}], pet=DOG{nickname='Rock', age=5, trickLevel=75, habits=[sleep, eat]}}";
+        String expected = "Family{mother=Jane Karleone, father=Vito Karleone, children=[Human{name='Michael', surname='Karleone', year=1999}], pet=[DOG{nickname='Rock', age=5, trickLevel=75, habits=[sleep, eat]}]}";
         assertEquals(expected, family.toString());
     }
 
     @Test
     void testEqualsAndHashCode() {
         Family family2 = new Family(father, mother);
-        family2.setPet(pet);
+        family2.addPet(pet);
         assertEquals(family, family2);
         assertEquals(family.hashCode(), family2.hashCode());
     }

@@ -11,8 +11,10 @@ public final class Man extends Human {
 
     @Override
     public void greetPet() {
-        if (getFamily() != null && getFamily().getPet() != null) {
-            System.out.printf("Hello my friend %s \n", getFamily().getPet().getNickName());
+        if (getFamily() != null && getFamily().getPets() != null && !getFamily().getPets().isEmpty()) {
+            for (Pet pet : getFamily().getPets()) {
+                System.out.printf("Hello my friend %s \n", pet.getNickName());
+            }
         } else {
             System.out.println("Family doesn't have a pet");
         }

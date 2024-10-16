@@ -4,9 +4,8 @@ import az.edu.strangers.dto.FamilyDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class CollectionFamilyDao implements FamilyDao{
+public class CollectionFamilyDao implements FamilyDao {
 
     private static final List<Family> FAMILY_LIST = new ArrayList<>();
 
@@ -16,24 +15,18 @@ public class CollectionFamilyDao implements FamilyDao{
     }
 
     @Override
-    public Optional<Family> getFamilyByIndex(long index) {
-        if (index < 0 || index >= FAMILY_LIST.size()) {
-            return Optional.empty();
-        }
-        Family findedFamily = FAMILY_LIST.get((int) index);
-        return Optional.of(findedFamily);
+    public Family getFamilyByIndex(int index) {
+        return FAMILY_LIST.get(index);
     }
 
     @Override
     public boolean deleteFamily(int id) {
-        if(id<0||id>=FAMILY_LIST.size()) return false;
-        FAMILY_LIST.remove(id);
-        return true;
+        return FAMILY_LIST.remove(id) != null;
     }
 
     @Override
     public boolean deleteFamily(Family family) {
-        return false;//not modified
+        return FAMILY_LIST.remove(family);
     }
 
     @Override
@@ -46,15 +39,21 @@ public class CollectionFamilyDao implements FamilyDao{
 
     @Override
     public Family updateFamily(FamilyDto familyDto) {
-       for (Family family:FAMILY_LIST){
-           if (family.getFather().equals(familyDto.getFather()) &&
-                   family.getMother().equals(familyDto.getMother())){
-               family.setFather(familyDto.getFather());
-               family.setMother(familyDto.getMother());
-               family.setPet(familyDto.getPet());
-               family.setChildren((familyDto.getChildren()));
-               return saveFamily(family);
-           }
-       } return null;
+        for (Family family : FAMILY_LIST) {
+            if (family.getFather().equals(familyDto.getFather()) &&
+                    family.getMother().equals(familyDto.getMother())) {
+                family.setFather(familyDto.getFather());
+                family.setMother(familyDto.getMother());
+                family.setChildren(familyDto.getChildren());
+                family.setPets(familyDto.getPets());
+                return family;
+            }
+        }
+
+        Family updatedFamily = new Family(familyDto.getFather(), familyDto.getMother());
+        updatedFamily.setPets(familyDto.getPets());
+        updatedFamily.setChildren(familyDto.getChildren());
+
+        return saveFamily(updatedFamily);
     }
 }

@@ -4,7 +4,6 @@ import az.edu.strangers.*;
 import az.edu.strangers.dao.Family;
 import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
-import az.edu.strangers.dto.HumanDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
 
@@ -12,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FamilyServiceImpl implements FamilyService {
@@ -28,32 +28,35 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public void displayAllFamilies() {
-        List<Family> familyList = familyDao.getAllFamilies();
-        for (int i = 0; i < familyList.size(); i++) {
-            System.out.println(familyList.get(i).toString());
-        }
+    public Family getFamilyById(final Integer index) {
+        return familyDao.getFamilyByIndex(index);
+    }
 
+    @Override
+    public void displayAllFamilies() {
+        familyDao.getAllFamilies()
+                .forEach(System.out::println);
     }
 
     @Override
     public List<Family> getFamiliesBiggerThan(Integer number) {
-        List<Family> familyList = getAllFamilies();
-        return familyList.stream().filter(family -> family.getFamilyCount() > number)
+        return getAllFamilies().stream()
+                .filter(family -> family.getFamilyCount() > number)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Family> getFamiliesLessThan(Integer number) {
-        List<Family> familyList = getAllFamilies();
-        return familyList.stream().filter(family -> family.getFamilyCount() < number)
+        return getAllFamilies().stream()
+                .filter(family -> family.getFamilyCount() < number)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Long countFamiliesWithMemberNumber(Integer number) {
-        List<Family> familyList = getAllFamilies();
-        return familyList.stream().filter(family -> family.getFamilyCount() == number)
+        return familyDao.getAllFamilies()
+                .stream()
+                .filter(family -> family.getFamilyCount() == number)
                 .count();
     }
 
@@ -74,6 +77,10 @@ public class FamilyServiceImpl implements FamilyService {
         return familyDao.deleteFamily(index);
     }
 
+    public boolean deleteFamily(final Family family){
+        return familyDao.deleteFamily(family);
+    }
+
     @Override
     public FamilyDto bornChild(FamilyDto familyDto, String masculineName, String feminineName) {
         Human father = familyDto.getFather();
@@ -83,12 +90,9 @@ public class FamilyServiceImpl implements FamilyService {
         String surname = father.getSurname();
         int birthYear = java.time.Year.now().getValue();
 
-        Human newbornChild;
-        if (isBoy) {
-            newbornChild = new Man(masculineName, surname, birthYear);
-        } else {
-            newbornChild = new Woman(feminineName, surname, birthYear);
-        }
+        Human newbornChild = isBoy ?
+                new Man(masculineName, surname, birthYear) :
+                new Woman(feminineName, surname, birthYear);
 
         List<Human> children = familyDto.getChildren();
         if (children == null) {
@@ -105,9 +109,16 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<Family> adoptChild(Family family, Human child) {
+    public Optional<Family> adoptChild(final Family family, final Human child) {
         if (family == null || child == null) return Optional.empty();
         family.addChild(child);
+
+        FamilyDto familyDto = new FamilyDto(family.getFather(), family.getMother());
+        familyDto.setPets(family.getPets());
+        familyDto.setChildren(family.getChildren());
+
+        familyDao.updateFamily(familyDto);
+
         return Optional.of(family);
     }
 
@@ -123,29 +134,19 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Long count() {
-        return (long) familyDao.getAllFamilies().size();
+    public int count() {
+        return familyDao.getAllFamilies().size();
     }
 
     @Override
-    public Optional<Family> getFamilyById(Long index) {
-        List<Family> familyList = familyDao.getAllFamilies();
-        return index == null || familyList.size() <= index ? Optional.empty() :
-                Optional.of(familyList.get(index.intValue()));
+    public Set<Pet> getPets(final Integer index) {
+        return familyDao.getFamilyByIndex(index).getPets();
     }
 
     @Override
-    public Optional<Pet> getPets(Long index) {
-        List<Family> familyList = familyDao.getAllFamilies();
-        return (index >= familyList.size() || index < 0) ? Optional.empty() :
-                Optional.of(familyList.get(index.intValue()).getPet());
-    }
-
-    @Override
-    public boolean addPet(final Long index, final Pet pet) {
-        if (familyDao.getAllFamilies().size() <= index || index < 0 || pet == null) return false;
-        Family family = familyDao.getAllFamilies().get(index.intValue());
-        family.setPet(pet);
+    public boolean addPet(final Integer index, final Pet pet) {
+        Family family = familyDao.getAllFamilies().get(index);
+        family.addPet(pet);
         return true;
     }
 }

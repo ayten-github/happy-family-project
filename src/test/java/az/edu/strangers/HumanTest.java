@@ -27,10 +27,10 @@ class HumanTest {
         Human mother = new Human("Jane", "Karleone", 1975);
         Human father = new Human("Vito", "Karleone", 1973);
         family = new Family(father, mother);
-        family.setPet(pet);
+        family.addPet(pet);
         schedule = new HashMap<>();
-        schedule.put(DayOfWeek.MONDAY , "Go to school");
         schedule.put(DayOfWeek.TUESDAY , "Play football");
+        schedule.put(DayOfWeek.MONDAY , "Go to school");
         human = new Human("Michael", "Karleone", 1999, 90, schedule, family);
     }
 
@@ -67,7 +67,7 @@ class HumanTest {
     @Test
     void testToString() {
         String expected = "Human{name='Michael', surname='Karleone', year=1999, iq=90, schedule={TUESDAY=Play football, MONDAY=Go to school}}";
-        assertEquals(expected, human.toString());
+        assertEquals(expected, human.toStringV2());
     }
 
     @Test
@@ -76,4 +76,5 @@ class HumanTest {
         assertEquals(human, human2);
         assertEquals(human.hashCode(), human2.hashCode());
     }
+
 }

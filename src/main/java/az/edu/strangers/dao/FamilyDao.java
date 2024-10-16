@@ -9,7 +9,7 @@ public interface FamilyDao {
 
     List<Family> getAllFamilies();
 
-    Optional<Family> getFamilyByIndex(long id);
+    Family getFamilyByIndex(int id);
 
     boolean deleteFamily(int id);
 

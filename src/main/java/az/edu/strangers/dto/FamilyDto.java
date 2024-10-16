@@ -3,16 +3,13 @@ package az.edu.strangers.dto;
 import az.edu.strangers.Human;
 import az.edu.strangers.Pet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class FamilyDto {
 
     private Human father;
     private Human mother;
-    private Pet pet;
+    private Set<Pet> pets;
     private List<Human> children;
 
     public FamilyDto(Human father, Human mother) {
@@ -26,7 +23,7 @@ public class FamilyDto {
     @Override
     public String toString() {
         return "FamilyDto{father=%s, mother=%s, pet=%s, children=%s}"
-                .formatted(father, mother, pet, children);
+                .formatted(father, mother, pets, children);
     }
 
     public Human getFather() {
@@ -45,12 +42,12 @@ public class FamilyDto {
         this.mother = mother;
     }
 
-    public Pet getPet() {
-        return pet;
+    public Set<Pet> getPets() {
+        return pets;
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void setPets(Set<Pet> pet) {
+        this.pets = pet;
     }
 
     public List<Human> getChildren() {
@@ -62,7 +59,7 @@ public class FamilyDto {
     }
     @Override
     public  int hashCode(){
-        return Objects.hash(father,mother,children,pet);
+        return Objects.hash(father,mother,children,pets);
     }
     @Override
     public boolean equals(Object object){
@@ -72,7 +69,7 @@ public class FamilyDto {
         return Objects.equals(father,familyDto.father)&&
                 Objects.equals(mother,familyDto.mother)&&
                 Objects.equals(children,familyDto.children)&&
-                Objects.equals(pet,familyDto.pet);
+                Objects.equals(pets,familyDto.pets);
     }
 
 }

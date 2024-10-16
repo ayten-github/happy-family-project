@@ -58,8 +58,10 @@ public class HappyFamilyApp {
         FamilyController familyController =
                 new FamilyController(familyService);
 
-        FamilyDto createdFamily = familyController.createNewFamily(new ManDto("Vito", "Karleone", 1973),
-                new WomanDto("Jane", "Karleone", 1975));
+        FamilyDto createdFamily = familyController.createNewFamily(
+                new ManDto("Vito", "Karleone", 1973),
+                new WomanDto("Jane", "Karleone", 1975)
+        );
 
         familyController.getAllFamilies();
 
@@ -67,5 +69,7 @@ public class HappyFamilyApp {
 
         familyController.getAllFamilies();
 
+        Long l = familyController.countFamiliesWithMemberNumber(3);
+        System.out.println(l);
     }
 }

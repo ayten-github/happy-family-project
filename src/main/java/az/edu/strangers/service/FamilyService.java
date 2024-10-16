@@ -8,6 +8,7 @@ import az.edu.strangers.dto.WomanDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface FamilyService {
 
@@ -31,11 +32,11 @@ public interface FamilyService {
 
     void deleteAllChildrenOlderThen(Integer age);
 
-    Long count();
+    int count();
 
-    Optional<Family> getFamilyById(Long index);
+    Family getFamilyById(Integer index);
 
-    Optional<Pet> getPets(Long index);
+    Set<Pet> getPets(Integer index);
 
-    boolean addPet(Long index, Pet pet);
+    boolean addPet(Integer index, Pet pet);
 }
