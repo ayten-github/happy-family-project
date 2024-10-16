@@ -1,6 +1,6 @@
 package az.edu.strangers;
+
 import az.edu.strangers.dao.Family;
-import az.edu.strangers.dto.FamilyDto;
 
 import java.util.Map;
 import java.util.Objects;
@@ -88,26 +88,25 @@ public class Human {
         this.family = family;
     }
 
-//    public FamilyDto getFamilyDto() {
-//        return familyDto;
-//    }
-//
-//    public void setFamilyDto(FamilyDto familyDto) {
-//        this.familyDto = familyDto;
-//    }
-
     public void greetPet() {
-        if (family != null && family.getPet() != null) {
-            System.out.printf("Hello  %s \n", family.getPet().getNickName());
+        if (family != null && family.getPets() != null && !family.getPets().isEmpty()) {
+            for (Pet pet : family.getPets()) {
+                System.out.printf("Hello  %s \n", pet.getNickName());
+            }
         } else {
             System.out.println("Family doesn't have a pet");
         }
     }
 
     public void describePet() {
-        if (family != null && family.getPet() != null) {
-            String slyness = family.getPet().getTrickLevel() > 50 ? "very sly" : "almost not sly";
-            System.out.printf("I have a %s, it is %d years old, and it is %s%n", family.getPet().getSpecies(), family.getPet().getAge(), slyness);
+        if (family != null && family.getPets() != null && !family.getPets().isEmpty()) {
+            for (Pet pet : family.getPets()) {
+                String slyness = pet.getTrickLevel() > 50 ? "very sly" : "almost not sly";
+                System.out.printf(
+                        "I have a %s, it is %d years old, and it is %s%n",
+                        pet.getSpecies(), pet.getAge(), slyness
+                );
+            }
         }
     }
 

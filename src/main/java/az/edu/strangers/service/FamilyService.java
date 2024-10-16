@@ -31,11 +31,11 @@ public interface FamilyService {
 
     void deleteAllChildrenOlderThen(Integer age);
 
-    Long count();
+    int count();
 
-    Optional<Family> getFamilyById(Long index);
+    Family getFamilyById(Integer index);
 
-    Optional<Pet> getPets(Long index);
+    Optional<List<Pet>> getPets(Integer index);
 
-    boolean addPet(Long index, Pet pet);
+    boolean addPet(Integer index, Pet pet);
 }

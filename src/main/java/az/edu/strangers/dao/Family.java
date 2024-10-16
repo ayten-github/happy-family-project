@@ -9,7 +9,7 @@ public class Family implements HumanCreator {
 
     private Human father;
     private Human mother;
-    private Pet pet;
+    private List<Pet> pets;
     private List<Human> children;
 
     private Random random;
@@ -27,6 +27,7 @@ public class Family implements HumanCreator {
         this.father = father;
         this.mother = mother;
         this.children = new ArrayList<>();
+        this.pets = new ArrayList<>();
         mother.setFamily(this);
         father.setFamily(this);
         this.random = new Random();
@@ -48,12 +49,12 @@ public class Family implements HumanCreator {
         this.mother = mother;
     }
 
-    public Pet getPet() {
-        return pet;
+    public List<Pet> getPets() {
+        return pets;
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
     public List<Human> getChildren() {
@@ -69,6 +70,9 @@ public class Family implements HumanCreator {
         child.setFamily(this);
     }
 
+    public void addPet(Pet pet){
+        pets.add(pet);
+    }
 
     public Optional<Human> deleteChild(int index) {
         if (index >= children.size() || index < 0) return Optional.empty();
@@ -122,7 +126,7 @@ public class Family implements HumanCreator {
         return String.format("Family{mother=%s, father=%s, children=%s, pet=%s}",
                 mother != null ? "%s %s".formatted(mother.getName(), mother.getSurname()) : "null",
                 father != null ? "%s %s".formatted(father.getName(), father.getSurname()) : "null",
-                children, pet != null ? getPet().toString() : "null");
+                children, pets != null ? getPets().toString() : "null");
     }
 
     @Override
@@ -130,12 +134,14 @@ public class Family implements HumanCreator {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Family family = (Family) o;
-        return Objects.equals(mother, family.mother) && Objects.equals(father, family.father) && Objects.equals(children, family.children) && Objects.equals(pet, family.pet);
+        return Objects.equals(mother, family.mother) &&
+                Objects.equals(father, family.father) &&
+                Objects.equals(children, family.children) &&
+                Objects.equals(pets, family.pets);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(mother, father, pet, children);
-        return result;
+        return Objects.hash(mother, father, pets, children);
     }
 }
