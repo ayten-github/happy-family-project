@@ -1,4 +1,4 @@
-package az.edu.strangers;
+package az.edu.strangers.entity.pet;
 
 import java.util.Objects;
 import java.util.Set;
@@ -77,7 +77,7 @@ public abstract class Pet {
     }
 
     public String toString() {
-        return "%s{nickname='%s', age=%d, trickLevel=%d, habits=%s}"
+        return "{ species='%s', nickname='%s', age=%d, trickLevel=%d, habits=%s}"
                 .formatted(species, nickName, age, trickLevel, habits);
     }
 
@@ -95,8 +95,6 @@ public abstract class Pet {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(species, nickName, age, trickLevel, habits);
-
-        return result;
+        return Objects.hash(species, nickName, age, trickLevel, habits);
     }
 }

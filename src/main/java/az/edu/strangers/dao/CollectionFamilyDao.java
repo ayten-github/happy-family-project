@@ -1,13 +1,14 @@
 package az.edu.strangers.dao;
 
 import az.edu.strangers.dto.FamilyDto;
+import az.edu.strangers.entity.human.Family;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
 
-    private static final List<Family> FAMILY_LIST = new ArrayList<>();
+    private final List<Family> FAMILY_LIST = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
@@ -55,5 +56,10 @@ public class CollectionFamilyDao implements FamilyDao {
         updatedFamily.setChildren(familyDto.getChildren());
 
         return saveFamily(updatedFamily);
+    }
+
+    @Override
+    public String toString() {
+        return "%s".formatted(FAMILY_LIST);
     }
 }

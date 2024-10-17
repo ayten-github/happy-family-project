@@ -1,17 +1,17 @@
 package az.edu.strangers.service;
 
-import az.edu.strangers.*;
-import az.edu.strangers.dao.Family;
+import az.edu.strangers.entity.human.Family;
 import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
+import az.edu.strangers.entity.human.Human;
+import az.edu.strangers.entity.human.Man;
+import az.edu.strangers.entity.human.Woman;
+import az.edu.strangers.entity.pet.Pet;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FamilyServiceImpl implements FamilyService {
@@ -77,7 +77,7 @@ public class FamilyServiceImpl implements FamilyService {
         return familyDao.deleteFamily(index);
     }
 
-    public boolean deleteFamily(final Family family){
+    public boolean deleteFamily(final Family family) {
         return familyDao.deleteFamily(family);
     }
 
@@ -85,7 +85,7 @@ public class FamilyServiceImpl implements FamilyService {
     public FamilyDto bornChild(FamilyDto familyDto, String masculineName, String feminineName) {
         Human father = familyDto.getFather();
 
-        boolean isBoy = Math.random() < 0.5;
+        boolean isBoy = new Random().nextBoolean();
 
         String surname = father.getSurname();
         int birthYear = java.time.Year.now().getValue();
@@ -147,6 +147,17 @@ public class FamilyServiceImpl implements FamilyService {
     public boolean addPet(final Integer index, final Pet pet) {
         Family family = familyDao.getAllFamilies().get(index);
         family.addPet(pet);
+        familyDao.updateFamily(convertFamily(family));
         return true;
+    }
+
+    public FamilyDto convertFamily(Family family) {
+        return new FamilyDto(family.getFather(), family.getMother());
+    }
+
+
+    @Override
+    public String toString() {
+        return "%s".formatted(familyDao);
     }
 }
