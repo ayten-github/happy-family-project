@@ -7,7 +7,8 @@ import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -16,17 +17,18 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FamilyServiceImplTest {
-    private static final FamilyDao dao = new CollectionFamilyDao();
-    private static final FamilyServiceImpl service = new FamilyServiceImpl(dao);
+    private FamilyDao dao = new CollectionFamilyDao();
+    private FamilyServiceImpl service = new FamilyServiceImpl(dao);
 
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void setUp() {
         initializeDao();
     }
 
     @Test
     void testGetAllFamilies() {
         assertEquals(dao.getAllFamilies(), service.getAllFamilies());
+        assertEquals(5, service.getAllFamilies().size());
     }
 
     @Test
@@ -71,7 +73,7 @@ public class FamilyServiceImplTest {
     void testDeleteFamilyByIndex() {
         int count = service.count();
         assertTrue(service.deleteFamilyByIndex(service.count() - 1));
-        assertEquals(count-1, service.count());
+        assertEquals(count - 1, service.count());
     }
 
     @Test
@@ -88,7 +90,7 @@ public class FamilyServiceImplTest {
         int count = service.count();
 
         assertTrue(service.deleteFamily(family));
-        assertEquals(count-1, service.count());
+        assertEquals(count - 1, service.count());
     }
 
     @Test
@@ -100,7 +102,7 @@ public class FamilyServiceImplTest {
 
         service.bornChild(createdFamily, "Michael", "Tresta");
 
-        assertEquals(1 ,service.getFamilyById(service.count()-1).getChildren().size());
+        assertEquals(1, service.getFamilyById(service.count() - 1).getChildren().size());
     }
 
     @Test
@@ -124,7 +126,7 @@ public class FamilyServiceImplTest {
     }
 
     @Test
-    void testGetPetsWhenPetsDontExist(){
+    void testGetPetsWhenPetsDontExist() {
         assertTrue(service.getFamilyById(1).getPets().isEmpty());
     }
 
@@ -143,7 +145,15 @@ public class FamilyServiceImplTest {
         assertEquals(1, familyById.getPets().size());
     }
 
-    static void initializeDao() {
+    @AfterEach
+    void tearDown() {
+        for (int i = 0; i < dao.getAllFamilies().size(); i++) {
+            if (dao.getAllFamilies().get(i).getChildren().isEmpty())
+                dao.getAllFamilies().remove(i);
+        }
+    }
+
+    void initializeDao() {
         Man man1 = new Man("John", "Doe", 1985, 56);
         Man man2 = new Man("Alex", "Smith", 1990, 91);
         Man man3 = new Man("Michael", "Johnson", 1975, 79);
@@ -186,10 +196,11 @@ public class FamilyServiceImplTest {
         Family family5 = new Family(man5, woman5);
         family5.addChild(child9);
 
-        Family family1 = dao.saveFamily(family);
+        dao.saveFamily(family);
         dao.saveFamily(family2);
         dao.saveFamily(family3);
         dao.saveFamily(family4);
         dao.saveFamily(family5);
     }
+
 }

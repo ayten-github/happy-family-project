@@ -66,7 +66,7 @@ class HumanTest {
 
     @Test
     void testToString() {
-        String expected = "Human{name='Michael', surname='Karleone', year=1999, iq=90, schedule={TUESDAY=Play football, MONDAY=Go to school}}";
+        String expected = "Human{name='Michael', surname='Karleone', year=1999, iq=90, schedule={MONDAY=Go to school, TUESDAY=Play football}}";
         assertEquals(expected, human.toStringV2());
     }
 
@@ -76,4 +76,5 @@ class HumanTest {
         assertEquals(human, human2);
         assertEquals(human.hashCode(), human2.hashCode());
     }
+
 }
