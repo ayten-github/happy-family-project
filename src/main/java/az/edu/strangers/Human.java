@@ -2,6 +2,9 @@ package az.edu.strangers;
 
 import az.edu.strangers.dao.Family;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 
@@ -9,7 +12,7 @@ public class Human {
 
     private String name;
     private String surname;
-    private Integer year;
+    private LocalDate birthDate;
     private Integer IQ;
     private Map<DayOfWeek, String> schedule;
     private Family family;
@@ -18,25 +21,31 @@ public class Human {
     public Human() {
     }
 
-    public Human(String name, String surname, Integer year) {
+    public Human(String name, String surname, LocalDate birthDate) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
+    }
+    public Human(String name, String surname, String birthDateStringForAoptedChild, Integer IQ) {
+        this.name = name;
+        this.surname = surname;
+        this.IQ = IQ;
+        this.birthDate = LocalDate.parse(birthDateStringForAoptedChild, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
-    public Human(String name, String surname, Integer year, Integer IQ, Map<DayOfWeek, String> schedule, Family family) {
+    public Human(String name, String surname, LocalDate birthDate, Integer IQ, Map<DayOfWeek, String> schedule, Family family) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
         this.IQ = IQ;
         this.schedule = schedule;
         this.family = family;
     }
 
-    public Human(String name, String surname, Integer year, Integer IQ) {
+    public Human(String name, String surname, LocalDate birthday, Integer IQ) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthday;
         this.IQ = IQ;
     }
 
@@ -56,12 +65,12 @@ public class Human {
         this.surname = surname;
     }
 
-    public Integer getYear() {
-        return year;
+    public LocalDate getYear() {
+        return birthDate;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setYear(LocalDate birthdate) {
+        this.birthDate = birthdate;
     }
 
     public Integer getIQ() {
@@ -97,6 +106,11 @@ public class Human {
             System.out.println("Family doesn't have a pet");
         }
     }
+    public String describeAge() {
+        LocalDate currentDate = LocalDate.now();
+        Period age = Period.between(birthDate, currentDate);
+        return String.format("Age: %d years, %d months, and %d days.", age.getYears(), age.getMonths(), age.getDays());
+    }
 
     public void describePet() {
         if (family != null && family.getPets() != null && !family.getPets().isEmpty()) {
@@ -111,11 +125,13 @@ public class Human {
     }
 
     public String toStringV2() {
-        return "Human{name='%s', surname='%s', year=%d, iq=%s, schedule=%s}".formatted(name, surname, year, IQ, schedule);
+        return "Human{name='%s', surname='%s', birthdate=%s, iq=%s, schedule=%s}".formatted(name, surname, birthDate, IQ, schedule);
     }
 
     public String toString() {
-        return "Human{name='%s', surname='%s', year=%d}".formatted(name, surname, year);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedBirthDate = birthDate.format(formatter);
+        return "Human{name='%s', surname='%s', birthdate=%s}".formatted(name, surname, formattedBirthDate);
     }
 
     @Override
@@ -123,13 +139,11 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return Objects.equals(year, human.year) && Objects.equals(IQ, human.IQ) && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.deepEquals(schedule, human.schedule);
+        return Objects.equals(birthDate, human.birthDate) && Objects.equals(IQ, human.IQ) && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.deepEquals(schedule, human.schedule);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(name, surname, year, IQ, schedule);
-
-        return result;
+        return Objects.hash(name, surname, birthDate, IQ, schedule);
     }
 }
