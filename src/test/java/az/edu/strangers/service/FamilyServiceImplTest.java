@@ -42,6 +42,7 @@ public class FamilyServiceImplTest {
 
     @Test
     void testGetFamiliesBiggerThan() {
+        service.displayAllFamilies();
         int number = 3;
         assertEquals(4, service.getFamiliesBiggerThan(number).size());
     }
@@ -147,10 +148,8 @@ public class FamilyServiceImplTest {
 
     @AfterEach
     void tearDown() {
-        for (int i = 0; i < dao.getAllFamilies().size(); i++) {
-            if (dao.getAllFamilies().get(i).getChildren().isEmpty())
-                dao.getAllFamilies().remove(i);
-        }
+        dao.getAllFamilies().clear();
+        initializeDao();
     }
 
     void initializeDao() {
