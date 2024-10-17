@@ -3,16 +3,13 @@ package az.edu.strangers.dto;
 import az.edu.strangers.Human;
 import az.edu.strangers.Pet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class FamilyDto {
 
     private Human father;
     private Human mother;
-    private List<Pet> pets;
+    private Set<Pet> pets;
     private List<Human> children;
 
     public FamilyDto(Human father, Human mother) {
@@ -45,11 +42,11 @@ public class FamilyDto {
         this.mother = mother;
     }
 
-    public List<Pet> getPets() {
+    public Set<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(List<Pet> pet) {
+    public void setPets(Set<Pet> pet) {
         this.pets = pet;
     }
 

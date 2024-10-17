@@ -39,17 +39,20 @@ public class CollectionFamilyDao implements FamilyDao {
 
     @Override
     public Family updateFamily(FamilyDto familyDto) {
-        Family updatedFamily = new Family(familyDto.getFather(), familyDto.getMother());
-        updatedFamily.setPets(familyDto.getPets());
-        updatedFamily.setChildren(familyDto.getChildren());
-
         for (Family family : FAMILY_LIST) {
             if (family.getFather().equals(familyDto.getFather()) &&
                     family.getMother().equals(familyDto.getMother())) {
-                family = updatedFamily;
+                family.setFather(familyDto.getFather());
+                family.setMother(familyDto.getMother());
+                family.setChildren(familyDto.getChildren());
+                family.setPets(familyDto.getPets());
                 return family;
             }
         }
+
+        Family updatedFamily = new Family(familyDto.getFather(), familyDto.getMother());
+        updatedFamily.setPets(familyDto.getPets());
+        updatedFamily.setChildren(familyDto.getChildren());
 
         return saveFamily(updatedFamily);
     }

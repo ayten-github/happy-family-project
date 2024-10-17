@@ -9,7 +9,7 @@ public class Family implements HumanCreator {
 
     private Human father;
     private Human mother;
-    private List<Pet> pets;
+    private Set<Pet> pets;
     private List<Human> children;
 
     private Random random;
@@ -27,7 +27,7 @@ public class Family implements HumanCreator {
         this.father = father;
         this.mother = mother;
         this.children = new ArrayList<>();
-        this.pets = new ArrayList<>();
+        this.pets = new HashSet<>();
         mother.setFamily(this);
         father.setFamily(this);
         this.random = new Random();
@@ -49,11 +49,11 @@ public class Family implements HumanCreator {
         this.mother = mother;
     }
 
-    public List<Pet> getPets() {
+    public Set<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(List<Pet> pets) {
+    public void setPets(Set<Pet> pets) {
         this.pets = pets;
     }
 

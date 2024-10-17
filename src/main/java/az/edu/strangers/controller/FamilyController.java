@@ -10,6 +10,7 @@ import az.edu.strangers.service.FamilyService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class FamilyController {
 
@@ -41,6 +42,10 @@ public class FamilyController {
         return familyService.getFamiliesLessThan(number);
     }
 
+    public Long countFamiliesWithMemberNumber(Integer number){
+        return number != null ? familyService.countFamiliesWithMemberNumber(number) : null;
+    }
+
     public FamilyDto createNewFamily(ManDto man, WomanDto women) {
         return familyService.createNewFamily(man, women);
     }
@@ -66,11 +71,11 @@ public class FamilyController {
     }
 
     public void deleteAllChildrenOlderThen(final Integer age) {
-        if (age != null) familyService.deleteAllChildrenOlderThen(age);
+        if (age != null && age >= 0) familyService.deleteAllChildrenOlderThen(age);
     }
 
-    public Optional<List<Pet>> getPets(final Integer index) {
-        if (index == null || index >= familyService.count() || index < 0) return Optional.empty();
+    public Set<Pet> getPets(final Integer index) {
+        if (index == null || index >= familyService.count() || index < 0) return null;
         return familyService.getPets(index);
     }
 

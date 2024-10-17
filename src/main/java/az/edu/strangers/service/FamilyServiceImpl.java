@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FamilyServiceImpl implements FamilyService {
@@ -53,7 +54,9 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Long countFamiliesWithMemberNumber(Integer number) {
-        return getAllFamilies().stream()
+        return familyDao.getAllFamilies()
+                .stream()
+                .peek(System.out::println)
                 .filter(family -> family.getFamilyCount() == number)
                 .count();
     }
@@ -137,8 +140,8 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<List<Pet>> getPets(final Integer index) {
-        return Optional.of(familyDao.getAllFamilies().get(index).getPets());
+    public Set<Pet> getPets(final Integer index) {
+        return familyDao.getFamilyByIndex(index).getPets();
     }
 
     @Override

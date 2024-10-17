@@ -8,6 +8,7 @@ import az.edu.strangers.dto.WomanDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface FamilyService {
 
@@ -35,7 +36,7 @@ public interface FamilyService {
 
     Family getFamilyById(Integer index);
 
-    Optional<List<Pet>> getPets(Integer index);
+    Set<Pet> getPets(Integer index);
 
     boolean addPet(Integer index, Pet pet);
 }

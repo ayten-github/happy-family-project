@@ -69,5 +69,7 @@ public class HappyFamilyApp {
 
         familyController.getAllFamilies();
 
+        Long l = familyController.countFamiliesWithMemberNumber(3);
+        System.out.println(l);
     }
 }
