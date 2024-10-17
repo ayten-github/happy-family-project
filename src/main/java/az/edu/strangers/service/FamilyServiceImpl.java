@@ -56,7 +56,6 @@ public class FamilyServiceImpl implements FamilyService {
     public Long countFamiliesWithMemberNumber(Integer number) {
         return familyDao.getAllFamilies()
                 .stream()
-                .peek(System.out::println)
                 .filter(family -> family.getFamilyCount() == number)
                 .count();
     }
