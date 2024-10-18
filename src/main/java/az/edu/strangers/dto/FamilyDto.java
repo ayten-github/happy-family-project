@@ -3,7 +3,11 @@ package az.edu.strangers.dto;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Pet;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 
 public class FamilyDto {
 
