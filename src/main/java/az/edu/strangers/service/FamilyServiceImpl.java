@@ -131,7 +131,7 @@ public class FamilyServiceImpl implements FamilyService {
         List<Family> familyList = getAllFamilies();
         int nowYear = LocalDate.now().getYear();
         familyList.forEach(family -> {
-            List<Human> olderChildren = family.getChildren().stream().filter(child -> (nowYear - child.getYear()) <= age)
+            List<Human> olderChildren = family.getChildren().stream().filter(child -> (nowYear - child.getYear()) >= age)
                     .collect(Collectors.toList());
             family.setChildren(olderChildren);
         });
