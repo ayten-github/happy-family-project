@@ -1,6 +1,4 @@
-package az.edu.strangers.entity.human;
-
-import az.edu.strangers.entity.pet.Pet;
+package az.edu.strangers.entity;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -140,7 +138,7 @@ public class Human {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedBirthDate = convertMillisDate(birthDate).format(formatter);
-        return "\n\t\t\t\t\t{ name='%s', surname='%s', birthdate='%s;schedule='%s' } "
+        return "{ name='%s', surname='%s', birthdate='%s;schedule='%s' } "
                 .formatted(name, surname, formattedBirthDate,schedule);
     }
 

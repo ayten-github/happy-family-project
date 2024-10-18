@@ -1,4 +1,4 @@
-package az.edu.strangers.entity.pet;
+package az.edu.strangers.entity;
 
 import java.util.Objects;
 import java.util.Set;

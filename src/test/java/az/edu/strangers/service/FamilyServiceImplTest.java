@@ -1,16 +1,16 @@
 package az.edu.strangers.service;
 
 import az.edu.strangers.dao.CollectionFamilyDao;
-import az.edu.strangers.entity.human.Family;
+import az.edu.strangers.entity.Family;
 import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
-import az.edu.strangers.entity.human.Human;
-import az.edu.strangers.entity.human.Man;
-import az.edu.strangers.entity.human.Woman;
-import az.edu.strangers.entity.pet.Dog;
-import az.edu.strangers.entity.pet.Pet;
+import az.edu.strangers.entity.Human;
+import az.edu.strangers.entity.Man;
+import az.edu.strangers.entity.Woman;
+import az.edu.strangers.entity.Dog;
+import az.edu.strangers.entity.Pet;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

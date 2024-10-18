@@ -1,4 +1,4 @@
-package az.edu.strangers.entity.pet;
+package az.edu.strangers.entity;
 
 public enum Species {
     DOG("Dog", 4, true, false),

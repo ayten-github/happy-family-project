@@ -1,7 +1,7 @@
 package az.edu.strangers.dto;
 
-import az.edu.strangers.entity.human.Human;
-import az.edu.strangers.entity.pet.Pet;
+import az.edu.strangers.entity.Human;
+import az.edu.strangers.entity.Pet;
 
 import java.util.*;
 
@@ -10,14 +10,11 @@ public class FamilyDto {
     private Human father;
     private Human mother;
     private Set<Pet> pets;
-    private List<Human> children;
+    private List<Human> children = new ArrayList<>();
 
     public FamilyDto(Human father, Human mother) {
         this.father = father;
         this.mother = mother;
-        this.children = new ArrayList<>();
-//        mother.setFamily(this);
-//        father.setFamily(this);
     }
 
     @Override
@@ -57,19 +54,21 @@ public class FamilyDto {
     public void setChildren(List<Human> children) {
         this.children = children;
     }
+
     @Override
-    public  int hashCode(){
-        return Objects.hash(father,mother,children,pets);
+    public int hashCode() {
+        return Objects.hash(father, mother, children, pets);
     }
+
     @Override
-    public boolean equals(Object object){
-        if (this==object) return true;
-        if (object==null|| getClass()!=object.getClass()) return false;
-        FamilyDto familyDto=(FamilyDto) object;
-        return Objects.equals(father,familyDto.father)&&
-                Objects.equals(mother,familyDto.mother)&&
-                Objects.equals(children,familyDto.children)&&
-                Objects.equals(pets,familyDto.pets);
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        FamilyDto familyDto = (FamilyDto) object;
+        return Objects.equals(father, familyDto.father) &&
+                Objects.equals(mother, familyDto.mother) &&
+                Objects.equals(children, familyDto.children) &&
+                Objects.equals(pets, familyDto.pets);
     }
 
 }

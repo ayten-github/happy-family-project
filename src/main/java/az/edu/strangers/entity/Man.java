@@ -1,6 +1,4 @@
-package az.edu.strangers.entity.human;
-
-import az.edu.strangers.entity.pet.Pet;
+package az.edu.strangers.entity;
 
 import java.time.LocalDate;
 
