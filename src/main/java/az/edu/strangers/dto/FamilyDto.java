@@ -1,7 +1,7 @@
 package az.edu.strangers.dto;
 
-import az.edu.strangers.Human;
-import az.edu.strangers.Pet;
+import az.edu.strangers.entity.human.Human;
+import az.edu.strangers.entity.pet.Pet;
 
 import java.util.*;
 

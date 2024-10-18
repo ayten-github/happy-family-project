@@ -1,6 +1,7 @@
 package az.edu.strangers.dao;
 
 import az.edu.strangers.dto.FamilyDto;
+import az.edu.strangers.entity.human.Family;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,4 +57,6 @@ public class CollectionFamilyDao implements FamilyDao {
 
         return saveFamily(updatedFamily);
     }
+
+
 }

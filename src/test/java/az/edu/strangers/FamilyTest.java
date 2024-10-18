@@ -1,6 +1,10 @@
 package az.edu.strangers;
 
-import az.edu.strangers.dao.Family;
+import az.edu.strangers.entity.human.Family;
+import az.edu.strangers.entity.human.DayOfWeek;
+import az.edu.strangers.entity.human.Human;
+import az.edu.strangers.entity.pet.Dog;
+import az.edu.strangers.entity.pet.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +34,7 @@ class FamilyTest {
         pet = new Dog( "Rock", 5, 75, habits);
         family.addPet(pet);
 
-        Map<DayOfWeek , String> schedule = new HashMap<>();
+        Map<DayOfWeek, String> schedule = new HashMap<>();
         schedule.put(DayOfWeek.MONDAY , "Go to school");
         schedule.put(DayOfWeek.TUESDAY , "Play football");
         child = new Human("Michael", "Karleone", 1999, 90, schedule, family);

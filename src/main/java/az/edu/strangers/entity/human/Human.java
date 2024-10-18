@@ -1,9 +1,8 @@
-package az.edu.strangers;
+package az.edu.strangers.entity.human;
 
-import az.edu.strangers.dao.Family;
+import az.edu.strangers.entity.pet.Pet;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -29,6 +28,12 @@ public class Human {
         this.surname = surname;
         this.birthDate = birthDate;
     }
+    public Human(String name, String surname, LocalDate birthday, Integer IQ) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = convertLocalDateToMillis(birthday);
+        this.IQ = IQ;
+    }
 
     public Human(String name, String surname, long birthDate, Integer IQ, Map<DayOfWeek, String> schedule, Family family) {
         this.name = name;
@@ -37,13 +42,6 @@ public class Human {
         this.IQ = IQ;
         this.schedule = schedule;
         this.family = family;
-    }
-
-    public Human(String name, String surname, LocalDate birthday, Integer IQ) {
-        this.name = name;
-        this.surname = surname;
-        this.birthDate = convertLocalDateToMillis(birthday);
-        this.IQ = IQ;
     }
 
     public String getName() {
@@ -142,7 +140,8 @@ public class Human {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedBirthDate = convertMillisDate(birthDate).format(formatter);
-        return "Human{name='%s', surname='%s', birthdate=%s}".formatted(name, surname, formattedBirthDate);
+        return "\n\t\t\t\t\t{ name='%s', surname='%s', birthdate='%s;schedule='%s' } "
+                .formatted(name, surname, formattedBirthDate,schedule);
     }
 
     @Override

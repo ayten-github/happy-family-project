@@ -1,6 +1,10 @@
 package az.edu.strangers;
 
-import az.edu.strangers.dao.Family;
+import az.edu.strangers.entity.human.Family;
+import az.edu.strangers.entity.human.DayOfWeek;
+import az.edu.strangers.entity.human.Human;
+import az.edu.strangers.entity.pet.Dog;
+import az.edu.strangers.entity.pet.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +20,7 @@ class HumanTest {
     private Human human;
     private Pet pet;
     private Family family;
-    private Map<DayOfWeek , String> schedule;
+    private Map<DayOfWeek, String> schedule;
 
     @BeforeEach
     void setUp() {

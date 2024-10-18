@@ -1,9 +1,9 @@
 package az.edu.strangers.dao;
 
 import az.edu.strangers.dto.FamilyDto;
+import az.edu.strangers.entity.human.Family;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface FamilyDao {
 

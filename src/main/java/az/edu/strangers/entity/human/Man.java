@@ -1,12 +1,16 @@
-package az.edu.strangers;
+package az.edu.strangers.entity.human;
+
+import az.edu.strangers.entity.pet.Pet;
+
+import java.time.LocalDate;
 
 public final class Man extends Human {
-    public Man(String name, String surname, Integer year) {
+    public Man(String name, String surname, long year) {
         super(name, surname, year);
     }
 
-    public Man(String name, String surname, Integer year, Integer IQ) {
-        super(name, surname, year, IQ);
+    public Man(String name, String surname, long year, Integer IQ) {
+        super(name, surname, LocalDate.ofEpochDay(year), IQ);
     }
 
     @Override

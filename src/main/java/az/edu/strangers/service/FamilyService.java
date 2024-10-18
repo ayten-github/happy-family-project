@@ -1,10 +1,11 @@
 package az.edu.strangers.service;
 
-import az.edu.strangers.*;
-import az.edu.strangers.dao.Family;
+import az.edu.strangers.entity.human.Family;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
+import az.edu.strangers.entity.human.Human;
+import az.edu.strangers.entity.pet.Pet;
 
 import java.util.List;
 import java.util.Optional;

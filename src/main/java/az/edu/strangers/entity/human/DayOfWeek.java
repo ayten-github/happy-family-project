@@ -1,6 +1,4 @@
-package az.edu.strangers;
-
-import java.util.Random;
+package az.edu.strangers.entity.human;
 
 public enum DayOfWeek {
     SUNDAY,

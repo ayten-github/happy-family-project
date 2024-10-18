@@ -1,6 +1,6 @@
-package az.edu.strangers.dao;
+package az.edu.strangers.entity.human;
 
-import az.edu.strangers.*;
+import az.edu.strangers.entity.pet.Pet;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -70,7 +70,7 @@ public class Family implements HumanCreator {
         child.setFamily(this);
     }
 
-    public void addPet(Pet pet){
+    public void addPet(Pet pet) {
         pets.add(pet);
     }
 
@@ -123,10 +123,11 @@ public class Family implements HumanCreator {
 
     @Override
     public String toString() {
-        return String.format("Family{mother=%s, father=%s, children=%s, pet=%s}",
-                mother != null ? "%s %s".formatted(mother.getName(), mother.getSurname()) : "null",
-                father != null ? "%s %s".formatted(father.getName(), father.getSurname()) : "null",
-                children, pets != null ? getPets().toString() : "null");
+        return String.format("\n family:\n\t\tmother: { %s },\n\t\tfather: { %s }," +
+                        " \n\t\tchildren: %s, \n\t\tpet: {%s}",
+                mother != null ? "name='%s', surname='%s'".formatted(mother.getName(), mother.getSurname()) : "null",
+                father != null ? "name='%s', surname='%s'".formatted(father.getName(), father.getSurname()) : "null",
+                children, pets != null ? getPets(): "null");
     }
 
     @Override

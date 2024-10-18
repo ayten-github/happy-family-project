@@ -1,12 +1,16 @@
-package az.edu.strangers;
+package az.edu.strangers.entity.human;
+
+import az.edu.strangers.entity.pet.Pet;
+
+import java.time.LocalDate;
 
 public final class Woman extends Human {
-    public Woman(String name, String surname, Integer year) {
+    public Woman(String name, String surname, long year) {
         super(name, surname, year);
     }
 
     public Woman(String name, String surname, Integer year, Integer IQ) {
-        super(name, surname, year, IQ);
+        super(name, surname, LocalDate.ofEpochDay(year), IQ);
     }
 
     public void makeUp() {

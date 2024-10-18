@@ -1,7 +1,6 @@
 package az.edu.strangers.dto;
 
-import az.edu.strangers.DayOfWeek;
-import az.edu.strangers.dao.Family;
+import az.edu.strangers.entity.human.DayOfWeek;
 
 import java.util.Map;
 
@@ -9,7 +8,7 @@ public class HumanDto {
 
     private String name;
     private String surname;
-    private Integer year;
+    private long year;
     private Integer IQ;
     private Map<DayOfWeek, String> schedule;
     private FamilyDto familyDto;
@@ -17,13 +16,13 @@ public class HumanDto {
     public HumanDto() {
     }
 
-    public HumanDto(String name, String surname, Integer year) {
+    public HumanDto(String name, String surname, long year) {
         this.name = name;
         this.surname = surname;
         this.year = year;
     }
 
-    public HumanDto(String name, String surname, Integer year, Integer IQ, Map<DayOfWeek, String> schedule, FamilyDto familyDto) {
+    public HumanDto(String name, String surname, long year, Integer IQ, Map<DayOfWeek, String> schedule, FamilyDto familyDto) {
         this.name = name;
         this.surname = surname;
         this.year = year;
@@ -48,11 +47,11 @@ public class HumanDto {
         this.surname = surname;
     }
 
-    public Integer getYear() {
+    public long getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(long year) {
         this.year = year;
     }
 

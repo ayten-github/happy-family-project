@@ -1,5 +1,7 @@
 package az.edu.strangers;
 
+import az.edu.strangers.entity.pet.Dog;
+import az.edu.strangers.entity.pet.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
