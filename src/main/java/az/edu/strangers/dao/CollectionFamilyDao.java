@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
 
-    private final List<Family> FAMILY_LIST = new ArrayList<>();
+    private static final List<Family> FAMILY_LIST = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
@@ -58,8 +58,5 @@ public class CollectionFamilyDao implements FamilyDao {
         return saveFamily(updatedFamily);
     }
 
-    @Override
-    public String toString() {
-        return "%s".formatted(FAMILY_LIST);
-    }
+
 }

@@ -11,7 +11,11 @@ import az.edu.strangers.entity.human.Woman;
 import az.edu.strangers.entity.pet.Pet;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class FamilyServiceImpl implements FamilyService {
@@ -156,8 +160,4 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
 
-    @Override
-    public String toString() {
-        return "%s".formatted(familyDao);
-    }
 }

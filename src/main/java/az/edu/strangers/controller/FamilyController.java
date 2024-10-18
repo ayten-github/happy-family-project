@@ -20,8 +20,8 @@ public class FamilyController {
         this.familyService = familyService;
     }
 
-    public void getAllFamilies() {
-        familyService.getAllFamilies();
+    public List<Family> getAllFamilies() {
+      return  familyService.getAllFamilies();
     }
 
     public Family getFamilyById(final Integer index) {
@@ -85,8 +85,5 @@ public class FamilyController {
         return familyService.addPet(index, pet);
     }
 
-    @Override
-    public String toString() {
-        return "All Families: %s".formatted(familyService);
-    }
+
 }

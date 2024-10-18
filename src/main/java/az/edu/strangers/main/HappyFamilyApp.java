@@ -6,16 +6,14 @@ import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
-import az.edu.strangers.entity.human.*;
+import az.edu.strangers.entity.human.Woman;
 import az.edu.strangers.entity.pet.Dog;
 import az.edu.strangers.entity.pet.DomesticCat;
 import az.edu.strangers.entity.pet.Pet;
 import az.edu.strangers.service.FamilyService;
 import az.edu.strangers.service.FamilyServiceImpl;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class HappyFamilyApp {
@@ -73,7 +71,7 @@ public class HappyFamilyApp {
 
         familyController.bornChild(createdFamily,"Ronaldo","Georgina");
 
-        System.out.println(familyController);
+        System.out.println(familyController.getAllFamilies());
 
         Woman mother = new Woman("Jane", "Karleone", 1975, 80);
         System.out.println(mother.describeAge());
