@@ -1,6 +1,6 @@
 package az.edu.strangers.dto;
 
-import az.edu.strangers.entity.human.DayOfWeek;
+import az.edu.strangers.entity.DayOfWeek;
 
 import java.util.Map;
 

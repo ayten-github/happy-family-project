@@ -6,10 +6,10 @@ import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
-import az.edu.strangers.entity.human.Woman;
-import az.edu.strangers.entity.pet.Dog;
-import az.edu.strangers.entity.pet.DomesticCat;
-import az.edu.strangers.entity.pet.Pet;
+import az.edu.strangers.entity.Woman;
+import az.edu.strangers.entity.Dog;
+import az.edu.strangers.entity.DomesticCat;
+import az.edu.strangers.entity.Pet;
 import az.edu.strangers.service.FamilyService;
 import az.edu.strangers.service.FamilyServiceImpl;
 

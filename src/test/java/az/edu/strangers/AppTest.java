@@ -1,7 +1,7 @@
 package az.edu.strangers;
 
-import az.edu.strangers.entity.pet.Dog;
-import az.edu.strangers.entity.pet.Pet;
+import az.edu.strangers.entity.Dog;
+import az.edu.strangers.entity.Pet;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;

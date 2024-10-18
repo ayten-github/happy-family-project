@@ -1,14 +1,14 @@
 package az.edu.strangers.service;
 
-import az.edu.strangers.entity.human.Family;
+import az.edu.strangers.entity.Family;
 import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
-import az.edu.strangers.entity.human.Human;
-import az.edu.strangers.entity.human.Man;
-import az.edu.strangers.entity.human.Woman;
-import az.edu.strangers.entity.pet.Pet;
+import az.edu.strangers.entity.Human;
+import az.edu.strangers.entity.Man;
+import az.edu.strangers.entity.Woman;
+import az.edu.strangers.entity.Pet;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -107,8 +107,6 @@ public class FamilyServiceImpl implements FamilyService {
 
         System.out.println("New child born: " + newbornChild.getName() + " " + newbornChild.getSurname());
 
-        familyDao.updateFamily(familyDto);
-
         return familyDto;
     }
 
@@ -121,8 +119,6 @@ public class FamilyServiceImpl implements FamilyService {
         familyDto.setPets(family.getPets());
         familyDto.setChildren(family.getChildren());
 
-        familyDao.updateFamily(familyDto);
-
         return Optional.of(family);
     }
 
@@ -131,7 +127,7 @@ public class FamilyServiceImpl implements FamilyService {
         List<Family> familyList = getAllFamilies();
         int nowYear = LocalDate.now().getYear();
         familyList.forEach(family -> {
-            List<Human> olderChildren = family.getChildren().stream().filter(child -> (nowYear - child.getYear()) <= age)
+            List<Human> olderChildren = family.getChildren().stream().filter(child -> (nowYear - child.getYear()) >= age)
                     .collect(Collectors.toList());
             family.setChildren(olderChildren);
         });
@@ -151,7 +147,6 @@ public class FamilyServiceImpl implements FamilyService {
     public boolean addPet(final Integer index, final Pet pet) {
         Family family = familyDao.getAllFamilies().get(index);
         family.addPet(pet);
-        familyDao.updateFamily(convertFamily(family));
         return true;
     }
 

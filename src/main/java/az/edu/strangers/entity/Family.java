@@ -1,6 +1,4 @@
-package az.edu.strangers.entity.human;
-
-import az.edu.strangers.entity.pet.Pet;
+package az.edu.strangers.entity;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -12,7 +10,7 @@ public class Family implements HumanCreator {
     private Set<Pet> pets;
     private List<Human> children;
 
-    private Random random;
+    private final Random random = new Random();
 
     static {
         System.out.println("Class Family is being loaded.");
@@ -30,7 +28,6 @@ public class Family implements HumanCreator {
         this.pets = new HashSet<>();
         mother.setFamily(this);
         father.setFamily(this);
-        this.random = new Random();
     }
 
     public Human getFather() {
@@ -105,30 +102,13 @@ public class Family implements HumanCreator {
 
         Integer childIQ = (getFather().getIQ() + getMother().getIQ()) / 2;
 
-        String name;
-        if (isMan) {
-            name = boyNames[random.nextInt(boyNames.length)];
-            Man man = new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
-            this.addChild(man);
-
-            return man;
-        } else {
-            name = girlNames[random.nextInt(boyNames.length)];
-            Woman woman = new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
-            this.addChild(woman);
-
-            return woman;
-        }
+        String name = isMan ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(boyNames.length)];
+        Human human = isMan ? new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ) :
+                new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+        this.addChild(human);
+        return human;
     }
 
-    @Override
-    public String toString() {
-        return String.format("\n family:\n\t\tmother: { %s },\n\t\tfather: { %s }," +
-                        " \n\t\tchildren: %s, \n\t\tpet: {%s}",
-                mother != null ? "name='%s', surname='%s'".formatted(mother.getName(), mother.getSurname()) : "null",
-                father != null ? "name='%s', surname='%s'".formatted(father.getName(), father.getSurname()) : "null",
-                children, pets != null ? getPets(): "null");
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -144,5 +124,11 @@ public class Family implements HumanCreator {
     @Override
     public int hashCode() {
         return Objects.hash(mother, father, pets, children);
+    }
+
+    @Override
+    public String toString() {
+        return "Family: \n\t\tfather: %s, \n\t\tmother: %s,\n\t\tchildren=%s, \n\t\tpets: %s"
+                .formatted(father, mother,children,pets);
     }
 }

@@ -1,10 +1,10 @@
 package az.edu.strangers;
 
-import az.edu.strangers.entity.human.Family;
-import az.edu.strangers.entity.human.DayOfWeek;
-import az.edu.strangers.entity.human.Human;
-import az.edu.strangers.entity.pet.Dog;
-import az.edu.strangers.entity.pet.Pet;
+import az.edu.strangers.entity.Family;
+import az.edu.strangers.entity.DayOfWeek;
+import az.edu.strangers.entity.Human;
+import az.edu.strangers.entity.Dog;
+import az.edu.strangers.entity.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

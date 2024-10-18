@@ -1,14 +1,13 @@
 package az.edu.strangers.dao;
 
-import az.edu.strangers.dto.FamilyDto;
-import az.edu.strangers.entity.human.Family;
+import az.edu.strangers.entity.Family;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
 
-    private static final List<Family> FAMILY_LIST = new ArrayList<>();
+    private final List<Family> FAMILY_LIST = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
@@ -17,7 +16,7 @@ public class CollectionFamilyDao implements FamilyDao {
 
     @Override
     public Family getFamilyByIndex(int index) {
-        return FAMILY_LIST.get(index);
+        return index >= 0 && index < FAMILY_LIST.size() ? FAMILY_LIST.get(index) : null;
     }
 
     @Override
@@ -34,28 +33,10 @@ public class CollectionFamilyDao implements FamilyDao {
     public Family saveFamily(Family familyEntity) {
         if (!FAMILY_LIST.contains(familyEntity)) {
             FAMILY_LIST.add(familyEntity);
+        } else {
+            System.out.println("Family is already contains!");
         }
         return familyEntity;
-    }
-
-    @Override
-    public Family updateFamily(FamilyDto familyDto) {
-        for (Family family : FAMILY_LIST) {
-            if (family.getFather().equals(familyDto.getFather()) &&
-                    family.getMother().equals(familyDto.getMother())) {
-                family.setFather(familyDto.getFather());
-                family.setMother(familyDto.getMother());
-                family.setChildren(familyDto.getChildren());
-                family.setPets(familyDto.getPets());
-                return family;
-            }
-        }
-
-        Family updatedFamily = new Family(familyDto.getFather(), familyDto.getMother());
-        updatedFamily.setPets(familyDto.getPets());
-        updatedFamily.setChildren(familyDto.getChildren());
-
-        return saveFamily(updatedFamily);
     }
 
 

@@ -1,4 +1,4 @@
-package az.edu.strangers.entity.human;
+package az.edu.strangers.entity;
 
 public enum DayOfWeek {
     SUNDAY,

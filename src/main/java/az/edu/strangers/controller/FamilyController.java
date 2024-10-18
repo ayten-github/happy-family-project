@@ -1,11 +1,11 @@
 package az.edu.strangers.controller;
 
-import az.edu.strangers.entity.human.Human;
-import az.edu.strangers.entity.pet.Pet;
-import az.edu.strangers.entity.human.Family;
 import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
+import az.edu.strangers.entity.Family;
+import az.edu.strangers.entity.Human;
+import az.edu.strangers.entity.Pet;
 import az.edu.strangers.service.FamilyService;
 
 import java.util.List;
@@ -21,13 +21,11 @@ public class FamilyController {
     }
 
     public List<Family> getAllFamilies() {
-      return  familyService.getAllFamilies();
+        return familyService.getAllFamilies();
     }
 
     public Family getFamilyById(final Integer index) {
-        return index >= 0 && index < familyService.count() ?
-                familyService.getFamilyById(index) :
-                null;
+        return familyService.getFamilyById(index);
     }
 
     public void displayAllFamilies() {
@@ -42,7 +40,7 @@ public class FamilyController {
         return familyService.getFamiliesLessThan(number);
     }
 
-    public Long countFamiliesWithMemberNumber(Integer number) {
+    public Long countFamiliesWithMemberNumber( Integer number) {
         return number != null ? familyService.countFamiliesWithMemberNumber(number) : null;
     }
 
@@ -65,8 +63,6 @@ public class FamilyController {
     }
 
     public Optional<Family> adoptChild(final Family family, final Human child) {
-        if (family == null || child == null) return Optional.empty();
-
         return familyService.adoptChild(family, child);
     }
 
