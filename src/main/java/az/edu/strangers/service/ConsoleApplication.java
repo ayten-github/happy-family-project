@@ -126,7 +126,7 @@ public class ConsoleApplication {
             if (fatherBirthDay < 1 || fatherBirthDay > 31) {
                 throw new IllegalArgumentException("Day must be between 1 and 31.");
             }
-
+//yeni ailenin add olunmasi
             System.out.println("New family created successfully.");
 
         }catch (IllegalArgumentException e) {
