@@ -15,6 +15,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -85,8 +86,8 @@ public class FamilyServiceImplTest {
     void testDeleteFamily() {
         Man man1 = new Man("John", "Doe", 1985, 56);
         Woman woman1 = new Woman("Emily", "Davis", 1992, 72);
-        Human child1 = new Human("John", "Doe", 1985, 100);
-        Human child2 = new Human("Alice", "Smith", 1990, 91);
+        Human child1 = new Human("John", "Doe", LocalDate.of(1985, 1, 1), 100);
+        Human child2 = new Human("Alice", "Smith", LocalDate.of(1990, 1, 1), 91);
 
         Family family = new Family(man1, woman1);
         family.addChild(child1);
@@ -169,16 +170,16 @@ public class FamilyServiceImplTest {
         Woman woman4 = new Woman("Ava", "Garcia", 1988, 84);
         Woman woman5 = new Woman("Isabella", "Martinez", 1990, 85);
 
-        Human child1 = new Human("John", "Doe", 1985, 100);
-        Human child2 = new Human("Alice", "Smith", 1990, 91);
-        Human child3 = new Human("Michael", "Brown", 1978, 95);
-        Human child4 = new Human("Emma", "Jones", 1995, 23);
-        Human child5 = new Human("William", "Garcia", 1988, 59);
-        Human child6 = new Human("Sophia", "Miller", 1992, 88);
-        Human child7 = new Human("James", "Wilson", 1980, 92);
-        Human child8 = new Human("Charlotte", "Davis", 1998, 85);
-        Human child9 = new Human("Benjamin", "Rodriguez", 1983, 95);
-        Human child10 = new Human("Lucas", "Martinez", 1991, 90);
+        Human child1 = new Human("John", "Doe", LocalDate.of(1985, 1, 1), 100);
+        Human child2 = new Human("Alice", "Smith", LocalDate.of(1990, 1, 1), 91);
+        Human child3 = new Human("Michael", "Brown", LocalDate.of(1978, 1, 1), 95);
+        Human child4 = new Human("Emma", "Jones", LocalDate.of(1995, 1, 1), 23);
+        Human child5 = new Human("William", "Garcia", LocalDate.of(1988, 1, 1), 59);
+        Human child6 = new Human("Sophia", "Miller", LocalDate.of(1992, 1, 1), 88);
+        Human child7 = new Human("James", "Wilson", LocalDate.of(1980, 1, 1), 92);
+        Human child8 = new Human("Charlotte", "Davis", LocalDate.of(1998, 1, 1), 85);
+        Human child9 = new Human("Benjamin", "Rodriguez", LocalDate.of(1983, 1, 1), 95);
+        Human child10 = new Human("Lucas", "Martinez", LocalDate.of(1991, 1, 1), 90);
 
         Family family = new Family(man1, woman1);
         family.addChild(child1);

@@ -1,14 +1,20 @@
 package az.edu.strangers.service;
 
+import az.edu.strangers.controller.FamilyController;
+import az.edu.strangers.dao.CollectionFamilyDao;
 import az.edu.strangers.dao.FamilyDao;
+import az.edu.strangers.entity.Family;
+import az.edu.strangers.entity.Human;
 import az.edu.strangers.service.FamilyService;
 import az.edu.strangers.service.FamilyServiceImpl;
 
 import java.util.Scanner;
 
 public class ConsoleApplication {
-    private FamilyService familyService = new FamilyServiceImpl(FamilyDao);
-    private Scanner scanner = new Scanner(System.in);
+    private final FamilyDao familyDao=new CollectionFamilyDao();
+    private final FamilyService familyService = new FamilyServiceImpl(familyDao);
+    private final FamilyController familyController=new FamilyController(familyService);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void run() {
         while (true) {
@@ -19,16 +25,30 @@ public class ConsoleApplication {
 
                 switch (choice) {
                     case 1:
-                        familyService.getAllFamilies();
+                        familyController.getAllFamilies();
                         break;
                     case 2:
                         familyService.displayAllFamilies();
+                        break;
+                    case 3:
+                        familyController.getFamiliesBiggerThan(scanner.nextInt());
+                        break;
+                    case 4:
+                        familyController.getFamiliesLessThan(scanner.nextInt());
+                        break;
+                    case 5:
+                        familyController.countFamiliesWithMemberNumber(scanner.nextInt());
                         break;
                     case 6:
                         createNewFamily();
                         break;
                     case 7:
-                        deleteFamily();
+                        familyController.deleteFamilyByIndex(scanner.nextInt());
+                        break;
+//                    case 8:
+//
+                    case 9:
+                        familyController.deleteAllChildrenOlderThen(scanner.nextInt());
                         break;
                     case 0:
                         System.exit(0);
@@ -53,12 +73,44 @@ public class ConsoleApplication {
     }
 
     private void createNewFamily() {
-    }
+        System.out.print("Enter mother's name: ");
+        String motherName = scanner.nextLine();
 
-    private void deleteFamily() {
-        System.out.println("Enter the index of the family to be deleted:");
-        int index = scanner.nextInt();
-        familyService.deleteFamilyByIndex(index - 1);
-        System.out.println("Family deleted.");
+        System.out.print("Enter mother's last name: ");
+        String motherSurname = scanner.nextLine();
+
+        System.out.print("Enter mother's birth year (YYYY): ");
+        int motherBirthYear = scanner.nextInt();
+
+        System.out.print("Enter mother's birth month (1-12): ");
+        int motherBirthMonth = scanner.nextInt();
+
+        System.out.print("Enter mother's birthday (1-31): ");
+        int motherBirthDay = scanner.nextInt();
+
+        System.out.print("Enter mother's IQ: ");
+        int motherIq = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        // Collect father's information
+        System.out.print("Enter father's name: ");
+        String fatherName = scanner.nextLine();
+        System.out.print("Enter father's last name: ");
+        String fatherSurname = scanner.nextLine();
+
+        System.out.print("Enter father's birth year (YYYY): ");
+        int fatherBirthYear = scanner.nextInt();
+
+        System.out.print("Enter father's birth month (1-12): ");
+        int fatherBirthMonth = scanner.nextInt();
+
+        System.out.print("Enter father's birthday (1-31): ");
+        int fatherBirthDay = scanner.nextInt();
+
+        System.out.print("Enter father's IQ: ");
+        int fatherIq = scanner.nextInt();
+
+
+        System.out.println("New family created successfully.");
     }
 }
