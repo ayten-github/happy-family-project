@@ -11,6 +11,10 @@ public final class Woman extends Human {
         super(name, surname, LocalDate.ofEpochDay(year), IQ);
     }
 
+    public Woman(String name, String surname, LocalDate birthday, Integer IQ) {
+        super(name, surname, birthday, IQ);
+    }
+
     public void makeUp() {
         System.out.println("For women, grooming is their way of life.");
     }

@@ -25,6 +25,8 @@ public class FamilyController {
     }
 
     public Family getFamilyById(final Integer index) {
+        if (index < 0 && index >= familyService.count()) throw new IndexOutOfBoundsException();
+
         return familyService.getFamilyById(index);
     }
 
@@ -49,7 +51,9 @@ public class FamilyController {
     }
 
     public boolean deleteFamilyByIndex(final int index) {
-        return index >= 0 && index < familyService.count() && familyService.deleteFamilyByIndex(index);
+        if (index < 0 && index >= familyService.count()) throw new IndexOutOfBoundsException();
+
+        return familyService.deleteFamilyByIndex(index);
     }
 
     public boolean deleteFamily(final Family family) {

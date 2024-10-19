@@ -2,6 +2,7 @@ package az.edu.strangers.dto;
 
 import az.edu.strangers.entity.DayOfWeek;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class HumanDto {
@@ -9,6 +10,7 @@ public class HumanDto {
     private String name;
     private String surname;
     private long year;
+    private LocalDate birthDate;
     private Integer IQ;
     private Map<DayOfWeek, String> schedule;
     private FamilyDto familyDto;
@@ -20,6 +22,13 @@ public class HumanDto {
         this.name = name;
         this.surname = surname;
         this.year = year;
+    }
+
+    public HumanDto(String name, String surname, LocalDate birthDate, Integer IQ) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.IQ = IQ;
     }
 
     public HumanDto(String name, String surname, long year, Integer IQ, Map<DayOfWeek, String> schedule, FamilyDto familyDto) {
@@ -77,6 +86,14 @@ public class HumanDto {
 
     public void setFamilyDto(FamilyDto familyDto) {
         this.familyDto = familyDto;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String toString() {

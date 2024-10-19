@@ -66,8 +66,8 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public FamilyDto createNewFamily(ManDto man, WomanDto woman) {
-        Woman mother = new Woman(woman.getName(), woman.getSurname(), woman.getYear());
-        Man father = new Man(man.getName(), man.getSurname(), man.getYear());
+        Woman mother = new Woman(woman.getName(), woman.getSurname(), woman.getBirthDate(), woman.getIQ());
+        Man father = new Man(man.getName(), man.getSurname(), man.getBirthDate(), man.getIQ());
 
         Family familyEntity = new Family(father, mother);
 

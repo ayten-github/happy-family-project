@@ -20,10 +20,6 @@ public class Human {
 
     public Human() {
     }
-    public String prettyFormat() {
-        return String.format("name='%s', surname='%s', birthDate='%s', IQ=%d, schedule='%s',family=%s",
-                name, surname, birthDate, IQ, schedule,family);
-    }
 
     public Human(String name, String surname, long birthDate) {
         this.name = name;
@@ -133,6 +129,11 @@ public class Human {
                 );
             }
         }
+    }
+
+    public String prettyFormat() {
+        return String.format("name='%s', surname='%s', birthDate='%s', IQ=%d, schedule='%s',family=%s",
+                name, surname, birthDate, IQ, schedule,family);
     }
 
     public String toStringV2() {

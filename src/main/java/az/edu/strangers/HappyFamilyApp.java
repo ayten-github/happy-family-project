@@ -1,4 +1,4 @@
-package az.edu.strangers.main;
+package az.edu.strangers;
 
 import az.edu.strangers.controller.FamilyController;
 import az.edu.strangers.dao.CollectionFamilyDao;
@@ -10,6 +10,7 @@ import az.edu.strangers.entity.Woman;
 import az.edu.strangers.entity.Dog;
 import az.edu.strangers.entity.DomesticCat;
 import az.edu.strangers.entity.Pet;
+import az.edu.strangers.service.ConsoleApplication;
 import az.edu.strangers.service.FamilyService;
 import az.edu.strangers.service.FamilyServiceImpl;
 
@@ -19,7 +20,9 @@ import java.util.Set;
 public class HappyFamilyApp {
 
     public static void main(String[] args) {
-
+        ConsoleApplication consoleApplication = new ConsoleApplication();
+        consoleApplication.run();
+/*
         Set<String> habits = new HashSet<>();
         habits.add("Eat");
         habits.add("Drink");
@@ -78,6 +81,6 @@ public class HappyFamilyApp {
 
 
         Long l = familyController.countFamiliesWithMemberNumber(3);
-        System.out.println(l);
+        System.out.println(l);*/
     }
 }
