@@ -90,9 +90,7 @@ public class ConsoleApplication {
 
         System.out.print("Enter mother's IQ: ");
         int motherIq = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        // Collect father's information
+        scanner.nextLine();
         System.out.print("Enter father's name: ");
         String fatherName = scanner.nextLine();
         System.out.print("Enter father's last name: ");
@@ -109,7 +107,7 @@ public class ConsoleApplication {
 
         System.out.print("Enter father's IQ: ");
         int fatherIq = scanner.nextInt();
-
+//add etmek
 
         System.out.println("New family created successfully.");
     }
