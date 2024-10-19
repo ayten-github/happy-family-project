@@ -15,7 +15,21 @@ public class Family implements HumanCreator {
     static {
         System.out.println("Class Family is being loaded.");
     }
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("family:\n");
+        sb.append("\tmother: ").append(mother.prettyFormat()).append(",\n");
+        sb.append("\tfather: ").append(father.prettyFormat()).append(",\n");
 
+        sb.append("\tchildren: \n");
+        for (Human child : children) {
+            sb.append("\t\t").append(child.prettyFormat()).append("\n");
+        }
+
+        sb.append("\tpets: ").append(pets.stream().map(Pet::prettyFormat).toList()).append("\n");
+
+        return sb.toString();
+    }
     {
         System.out.println("New Family object is created.");
     }
