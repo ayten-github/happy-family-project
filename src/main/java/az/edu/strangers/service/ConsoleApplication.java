@@ -11,9 +11,9 @@ import az.edu.strangers.service.FamilyServiceImpl;
 import java.util.Scanner;
 
 public class ConsoleApplication {
-    private final FamilyDao familyDao=new CollectionFamilyDao();
+    private final FamilyDao familyDao = new CollectionFamilyDao();
     private final FamilyService familyService = new FamilyServiceImpl(familyDao);
-    private final FamilyController familyController=new FamilyController(familyService);
+    private final FamilyController familyController = new FamilyController(familyService);
     private final Scanner scanner = new Scanner(System.in);
 
     public void run() {
@@ -28,7 +28,7 @@ public class ConsoleApplication {
                         familyController.getAllFamilies();
                         break;
                     case 2:
-                        familyService.displayAllFamilies();
+                        familyController.displayAllFamilies();
                         break;
                     case 3:
                         familyController.getFamiliesBiggerThan(scanner.nextInt());
@@ -43,10 +43,11 @@ public class ConsoleApplication {
                         createNewFamily();
                         break;
                     case 7:
-                        familyController.deleteFamilyByIndex(scanner.nextInt());
+                        deleteFamily();
                         break;
-//                    case 8:
-//
+                    case 8:
+                        createNewFamily();
+                        break;
                     case 9:
                         familyController.deleteAllChildrenOlderThen(scanner.nextInt());
                         break;
@@ -110,5 +111,12 @@ public class ConsoleApplication {
 //add etmek
 
         System.out.println("New family created successfully.");
+    }
+
+    private void deleteFamily() {
+        System.out.println("Enter the index of the family to be deleted:");
+        int index = scanner.nextInt();
+        familyController.deleteFamilyByIndex(index - 1);
+        System.out.println("Family deleted.");
     }
 }
