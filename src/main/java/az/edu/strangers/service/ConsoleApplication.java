@@ -3,11 +3,14 @@ package az.edu.strangers.service;
 import az.edu.strangers.controller.FamilyController;
 import az.edu.strangers.dao.CollectionFamilyDao;
 import az.edu.strangers.dao.FamilyDao;
+import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.entity.Family;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.service.FamilyService;
 import az.edu.strangers.service.FamilyServiceImpl;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Scanner;
 
 public class ConsoleApplication {
@@ -74,44 +77,63 @@ public class ConsoleApplication {
     }
 
     private void createNewFamily() {
-        System.out.print("Enter mother's name: ");
-        String motherName = scanner.nextLine();
+        String motherName, motherSurname, fatherName, fatherSurname;
+        int motherBirthYear, motherBirthMonth, motherBirthDay, motherIq;
+        int fatherBirthYear, fatherBirthMonth, fatherBirthDay, fatherIq;
 
-        System.out.print("Enter mother's last name: ");
-        String motherSurname = scanner.nextLine();
+        try {
+            System.out.print("Enter mother's name: ");
+            motherName = scanner.nextLine();
 
-        System.out.print("Enter mother's birth year (YYYY): ");
-        int motherBirthYear = scanner.nextInt();
+            System.out.print("Enter mother's last name: ");
+            motherSurname = scanner.nextLine();
 
-        System.out.print("Enter mother's birth month (1-12): ");
-        int motherBirthMonth = scanner.nextInt();
+            System.out.print("Enter mother's birth year (YYYY): ");
+            motherBirthYear = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Enter mother's birthday (1-31): ");
-        int motherBirthDay = scanner.nextInt();
+            System.out.print("Enter mother's birth month (1-12): ");
+            motherBirthMonth = Integer.parseInt(scanner.nextLine());
+            if (motherBirthMonth < 1 || motherBirthMonth > 12) {
+                throw new IllegalArgumentException("Month must be between 1 and 12.");
+            }
 
-        System.out.print("Enter mother's IQ: ");
-        int motherIq = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Enter father's name: ");
-        String fatherName = scanner.nextLine();
-        System.out.print("Enter father's last name: ");
-        String fatherSurname = scanner.nextLine();
+            System.out.print("Enter mother's birthday (1-31): ");
+            motherBirthDay = Integer.parseInt(scanner.nextLine());
+            if (motherBirthDay < 1 || motherBirthDay > 31) {
+                throw new IllegalArgumentException("Day must be between 1 and 31.");
+            }
 
-        System.out.print("Enter father's birth year (YYYY): ");
-        int fatherBirthYear = scanner.nextInt();
+            System.out.print("Enter mother's IQ: ");
+            motherIq = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Enter father's birth month (1-12): ");
-        int fatherBirthMonth = scanner.nextInt();
+            System.out.print("Enter father's name: ");
+            fatherName = scanner.nextLine();
 
-        System.out.print("Enter father's birthday (1-31): ");
-        int fatherBirthDay = scanner.nextInt();
+            System.out.print("Enter father's last name: ");
+            fatherSurname = scanner.nextLine();
 
-        System.out.print("Enter father's IQ: ");
-        int fatherIq = scanner.nextInt();
-//add etmek
+            System.out.print("Enter father's birth year (YYYY): ");
+            fatherBirthYear = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("New family created successfully.");
+            System.out.print("Enter father's birth month (1-12): ");
+            fatherBirthMonth = Integer.parseInt(scanner.nextLine());
+            if (fatherBirthMonth < 1 || fatherBirthMonth > 12) {
+                throw new IllegalArgumentException("Month must be between 1 and 12.");
+            }
+
+            System.out.print("Enter father's birthday (1-31): ");
+            fatherBirthDay = Integer.parseInt(scanner.nextLine());
+            if (fatherBirthDay < 1 || fatherBirthDay > 31) {
+                throw new IllegalArgumentException("Day must be between 1 and 31.");
+            }
+
+            System.out.println("New family created successfully.");
+
+        }catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
+
 
     private void deleteFamily() {
         System.out.println("Enter the index of the family to be deleted:");
