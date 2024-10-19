@@ -3,18 +3,15 @@ package az.edu.strangers.service;
 import az.edu.strangers.controller.FamilyController;
 import az.edu.strangers.dao.CollectionFamilyDao;
 import az.edu.strangers.dao.FamilyDao;
-import az.edu.strangers.dto.FamilyDto;
 import az.edu.strangers.dto.ManDto;
 import az.edu.strangers.dto.WomanDto;
 import az.edu.strangers.entity.Family;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Man;
 import az.edu.strangers.entity.Woman;
-import az.edu.strangers.service.FamilyService;
-import az.edu.strangers.service.FamilyServiceImpl;
+import az.edu.strangers.exception.FamilyOverflowException;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Scanner;
 
 public class ConsoleApplication {
@@ -22,6 +19,8 @@ public class ConsoleApplication {
     private final FamilyService familyService = new FamilyServiceImpl(familyDao);
     private final FamilyController familyController = new FamilyController(familyService);
     private final Scanner scanner = new Scanner(System.in);
+
+    private final int familyCountLimit = 5;
 
     public void run() {
         boolean canLoop = true;
@@ -60,6 +59,7 @@ public class ConsoleApplication {
                         deleteFamily();
                         break;
                     case 8:
+                        checkSize();
                         altMenuOfEditFamily();
                         int choiceOfAltMenu = Integer.parseInt(scanner.nextLine());
                         switch (choiceOfAltMenu) {
@@ -73,13 +73,16 @@ public class ConsoleApplication {
                                 System.out.println("Name for the baby, if it's a girl: ");
                                 String girlName = scanner.nextLine();
 
-                                Family familyById = familyController.getFamilyById(familyId-1);
-                                FamilyDto familyDto = new FamilyDto(familyById.getFather(), familyById.getMother());
-                                familyController.bornChild(familyDto, boyName, girlName);
+                                Family familyById = familyController.getFamilyById(familyId - 1);
+                                familyController.bornChild(familyById, boyName, girlName);
                                 break;
                             case 2:
                                 System.out.print("Enter Family ID: ");
-                                Family family = familyController.getFamilyById(Integer.parseInt(scanner.nextLine()));
+                                int id = Integer.parseInt(scanner.nextLine());
+
+                                if (id > familyController.getAllFamilies().size() || id < 0)
+                                    throw new IllegalArgumentException("Given ID is above the count of families. Reverting back to menu");
+
                                 Human child = null;
                                 try {
                                     System.out.print("Enter child's name: ");
@@ -108,14 +111,13 @@ public class ConsoleApplication {
                                     int childIq = Integer.parseInt(scanner.nextLine());
 
                                     child = new Human(childName, childSurname, childBirthDate, childIq);
-                                }catch (NumberFormatException e){
+                                } catch (NumberFormatException e) {
                                     System.out.println("Invalid input. Reverting back to menu.");
-                                }
-                                catch (IllegalArgumentException e) {
+                                } catch (IllegalArgumentException e) {
                                     System.out.println(e.getMessage());
                                 }
 
-                                familyController.adoptChild(family, child);
+                                familyController.adoptChild(familyController.getFamilyById(id-1), child);
                                 break;
                             case 3:
                                 System.out.println("Returning back to menu..");
@@ -143,6 +145,8 @@ public class ConsoleApplication {
     }
 
     private void createNewFamily() {
+        checkSize();
+
         String motherName, motherSurname, fatherName, fatherSurname;
         int motherBirthYear, motherBirthMonth, motherBirthDay, motherIq;
         int fatherBirthYear, fatherBirthMonth, fatherBirthDay, fatherIq;
@@ -203,10 +207,9 @@ public class ConsoleApplication {
             familyController.createNewFamily(father, mother);
 
             System.out.println("New family created successfully.");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Invalid input. Reverting back to menu.");
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -214,10 +217,10 @@ public class ConsoleApplication {
     private void deleteFamily() {
         System.out.println("Enter the index of the family to be deleted:");
         int index = scanner.nextInt();
-        try{
+        try {
             familyController.deleteFamilyByIndex(index - 1);
             System.out.println("Family deleted.");
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Please select available index. Reverting back to menu.");
         }
     }
@@ -236,11 +239,11 @@ public class ConsoleApplication {
                 "10. Exit\n");
     }
 
-    private void altMenuOfEditFamily(){
+    private void altMenuOfEditFamily() {
         System.out.print(
                 "1. Give birth to a baby\n" +
-                "2. Adopt a child\n" +
-                "3. Return to main menu\n"
+                        "2. Adopt a child\n" +
+                        "3. Return to main menu\n"
         );
     }
 
@@ -292,5 +295,10 @@ public class ConsoleApplication {
         familyDao.saveFamily(family3);
         familyDao.saveFamily(family4);
         familyDao.saveFamily(family5);
+    }
+
+    public void checkSize() {
+        int size = familyController.getAllFamilies().size();
+        if (size>=familyCountLimit) throw new FamilyOverflowException("Family count has reached its limit.");
     }
 }

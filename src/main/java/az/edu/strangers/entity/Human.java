@@ -143,7 +143,7 @@ public class Human {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedBirthDate = convertMillisDate(birthDate).format(formatter);
-        return "{ name='%s', surname='%s', birthdate='%s;schedule='%s' } "
+        return "{ name='%s', surname='%s', birthdate='%s', schedule='%s' }"
                 .formatted(name, surname, formattedBirthDate,schedule);
     }
 

@@ -60,10 +60,10 @@ public class FamilyController {
         return family != null && deleteFamily(family);
     }
 
-    public FamilyDto bornChild(final FamilyDto familyDto, final String masculineName, final String feminineName) {
-        if (familyDto == null || masculineName == null || feminineName == null) return null;
+    public Family bornChild(final Family family, final String masculineName, final String feminineName) {
+        if (family == null || masculineName == null || feminineName == null) return null;
 
-        return familyService.bornChild(familyDto, masculineName, feminineName);
+        return familyService.bornChild(family, masculineName, feminineName);
     }
 
     public Optional<Family> adoptChild(final Family family, final Human child) {

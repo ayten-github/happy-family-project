@@ -86,39 +86,48 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public FamilyDto bornChild(FamilyDto familyDto, String masculineName, String feminineName) {
-        Human father = familyDto.getFather();
+    public Family bornChild(Family family, String masculineName, String feminineName) {
+        Human father = family.getFather();
 
         boolean isBoy = new Random().nextBoolean();
 
         String surname = father.getSurname();
-        int birthYear = java.time.Year.now().getValue();
+        int birthYear = LocalDate.now().getYear();
 
         Human newbornChild = isBoy ?
                 new Man(masculineName, surname, birthYear) :
                 new Woman(feminineName, surname, birthYear);
 
-        List<Human> children = familyDto.getChildren();
+        List<Human> children = family.getChildren();
         if (children == null) {
             children = new ArrayList<>();
         }
         children.add(newbornChild);
-        familyDto.setChildren(children);
+        family.setChildren(children);
 
         System.out.println("New child born: " + newbornChild.getName() + " " + newbornChild.getSurname());
 
-        return familyDto;
+        return family;
     }
 
     @Override
     public Optional<Family> adoptChild(final Family family, final Human child) {
         if (family == null || child == null) return Optional.empty();
-        family.addChild(child);
 
-        FamilyDto familyDto = new FamilyDto(family.getFather(), family.getMother());
-        familyDto.setPets(family.getPets());
-        familyDto.setChildren(family.getChildren());
+        System.out.println("------");
+        System.out.println(getAllFamilies());
+        System.out.println("------");
 
+        for (Family existingFamily : getAllFamilies()) {
+            System.out.println("1231231231231");
+            if (existingFamily.getFather().getName().equals(family.getFather().getName()) &&
+                    existingFamily.getMother().getName().equals(family.getMother().getName())) {
+                System.out.println("a");
+                existingFamily.addChild(child);
+                break;
+            }
+
+        }
         return Optional.of(family);
     }
 
@@ -126,8 +135,10 @@ public class FamilyServiceImpl implements FamilyService {
     public void deleteAllChildrenOlderThen(Integer age) {
         List<Family> familyList = getAllFamilies();
         int nowYear = LocalDate.now().getYear();
+
         familyList.forEach(family -> {
-            List<Human> olderChildren = family.getChildren().stream().filter(child -> (nowYear - child.getYear()) >= age)
+            List<Human> olderChildren = family.getChildren().stream()
+                    .filter(child -> (nowYear - child.convertMillisDate(child.getYear()).getYear()) <= age)
                     .collect(Collectors.toList());
             family.setChildren(olderChildren);
         });
