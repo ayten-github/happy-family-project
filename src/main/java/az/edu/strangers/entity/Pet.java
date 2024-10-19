@@ -13,6 +13,10 @@ public abstract class Pet {
 
     public Pet() {
     }
+    public String prettyFormat() {
+        return String.format("species=%s, nickName='%s', age=%d, trickLevel=%d, habits=%s",
+                species, nickName, age, trickLevel, habits);
+    }
 
     public Pet(Species species, String nickName) {
         this.species = species;
