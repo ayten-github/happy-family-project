@@ -10,19 +10,24 @@ import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Man;
 import az.edu.strangers.entity.Woman;
 import az.edu.strangers.exception.FamilyOverflowException;
+import az.edu.strangers.util.FileUtil;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleApplication {
+public class ConsoleApplication implements Serializable {
     private final FamilyDao familyDao = new CollectionFamilyDao();
     private final FamilyService familyService = new FamilyServiceImpl(familyDao);
     private final FamilyController familyController = new FamilyController(familyService);
     private final Scanner scanner = new Scanner(System.in);
-
+    public static final String fileName="app.obj";
+    public static ConsoleApplication consoleApplication=null;
     private final int familyCountLimit = 5;
 
     public void run() {
+        loadDate();
         boolean canLoop = true;
         while (canLoop) {
             displayMenu();
@@ -33,6 +38,7 @@ public class ConsoleApplication {
                 switch (choice) {
                     case 1:
                         initializeDao();
+                        saveDate();
                         System.out.println("Database has been successfully filled with test data.");
                         break;
                     case 2:
@@ -74,11 +80,14 @@ public class ConsoleApplication {
                         break;
                     default:
                         System.out.println("Wrong choice, try again.");
+                        break;
                 }
+
             } catch (Exception e) {
                 System.out.println("An error occurred:" + e.getMessage());
                 scanner.nextLine();
             }
+            saveDate();
         }
     }
 
@@ -308,4 +317,18 @@ public class ConsoleApplication {
         int size = familyController.getAllFamilies().size();
         if (size >= familyCountLimit) throw new FamilyOverflowException("Family count has reached its limit.");
     }
+
+    public static void saveDate(){
+        FileUtil.writeObjectToFile(consoleApplication,fileName);
+
+    }
+
+    public void loadDate() {
+            Object obj = FileUtil.readObjectFromFile("app.obj");
+            if (obj instanceof ConsoleApplication) {
+                consoleApplication = (ConsoleApplication) obj;
+            }
+
+        }
+
 }

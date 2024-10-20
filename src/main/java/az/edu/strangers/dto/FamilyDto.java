@@ -3,14 +3,17 @@ package az.edu.strangers.dto;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Pet;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 
-public class FamilyDto {
+public class FamilyDto implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private Human father;
     private Human mother;
     private Set<Pet> pets;
