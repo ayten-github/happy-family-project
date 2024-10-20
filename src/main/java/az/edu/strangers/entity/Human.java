@@ -1,5 +1,7 @@
 package az.edu.strangers.entity;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -8,8 +10,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-public class Human {
+public class Human implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private String name;
     private String surname;
     private long birthDate;

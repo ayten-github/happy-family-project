@@ -1,10 +1,12 @@
 package az.edu.strangers.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class Pet {
+public abstract class Pet implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     protected Species species;
     protected String nickName;
     protected Integer age;

@@ -2,10 +2,11 @@ package az.edu.strangers.dao;
 
 import az.edu.strangers.entity.Family;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionFamilyDao implements FamilyDao {
+public class CollectionFamilyDao implements FamilyDao, Serializable {
 
     private final List<Family> FAMILY_LIST = new ArrayList<>();
 

@@ -1,10 +1,12 @@
 package az.edu.strangers.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Family implements HumanCreator {
+public class Family implements HumanCreator, Serializable {
 
+    private static final long serialVersionUID = 1L;
     private Human father;
     private Human mother;
     private Set<Pet> pets;
