@@ -33,7 +33,7 @@ public class ConsoleApplication {
                 switch (choice) {
                     case 1:
                         initializeDao();
-                        System.out.println("Database has been succesfully filled with test data.");
+                        System.out.println("Database has been successfully filled with test data.");
                         break;
                     case 2:
                         familyController.displayAllFamilies();
@@ -61,69 +61,7 @@ public class ConsoleApplication {
                     case 8:
                         checkSize();
                         altMenuOfEditFamily();
-                        int choiceOfAltMenu = Integer.parseInt(scanner.nextLine());
-                        switch (choiceOfAltMenu) {
-                            case 1:
-                                System.out.print("Enter Family ID: ");
-                                int familyId = Integer.parseInt(scanner.nextLine());
-
-                                System.out.println("Name for the baby, if it's a boy: ");
-                                String boyName = scanner.nextLine();
-
-                                System.out.println("Name for the baby, if it's a girl: ");
-                                String girlName = scanner.nextLine();
-
-                                Family familyById = familyController.getFamilyById(familyId - 1);
-                                familyController.bornChild(familyById, boyName, girlName);
-                                break;
-                            case 2:
-                                System.out.print("Enter Family ID: ");
-                                int id = Integer.parseInt(scanner.nextLine());
-
-                                if (id > familyController.getAllFamilies().size() || id < 0)
-                                    throw new IllegalArgumentException("Given ID is above the count of families. Reverting back to menu");
-
-                                Human child = null;
-                                try {
-                                    System.out.print("Enter child's name: ");
-                                    String childName = scanner.nextLine();
-
-                                    System.out.print("Enter child's last name: ");
-                                    String childSurname = scanner.nextLine();
-
-                                    System.out.print("Enter child's birth year (YYYY): ");
-                                    int childBirthYear = Integer.parseInt(scanner.nextLine());
-
-                                    System.out.print("Enter child's birth month (1-12): ");
-                                    int childBirthMonth = Integer.parseInt(scanner.nextLine());
-                                    if (childBirthMonth < 1 || childBirthMonth > 12) {
-                                        throw new IllegalArgumentException("Month must be between 1 and 12.");
-                                    }
-
-                                    System.out.print("Enter child's birthday (1-31): ");
-                                    int childBirthDay = Integer.parseInt(scanner.nextLine());
-                                    if (childBirthDay < 1 || childBirthDay > 31) {
-                                        throw new IllegalArgumentException("Day must be between 1 and 31.");
-                                    }
-                                    LocalDate childBirthDate = LocalDate.of(childBirthYear, childBirthMonth, childBirthDay);
-
-                                    System.out.print("Enter child's IQ: ");
-                                    int childIq = Integer.parseInt(scanner.nextLine());
-
-                                    child = new Human(childName, childSurname, childBirthDate, childIq);
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Invalid input. Reverting back to menu.");
-                                } catch (IllegalArgumentException e) {
-                                    System.out.println(e.getMessage());
-                                }
-
-                                familyController.adoptChild(familyController.getFamilyById(id-1), child);
-                                break;
-                            case 3:
-                                System.out.println("Returning back to menu..");
-                                break;
-                            default:
-                        }
+                        getBabyInformation();
                         break;
                     case 9:
                         System.out.print("Please enter age of majority: ");
@@ -144,12 +82,77 @@ public class ConsoleApplication {
         }
     }
 
+    private void getBabyInformation() {
+        int choiceOfAltMenu = Integer.parseInt(scanner.nextLine());
+        switch (choiceOfAltMenu) {
+            case 1:
+                System.out.print("Enter family iD: ");
+                int familyID = Integer.parseInt(scanner.nextLine());
+
+                System.out.println("Name for baby, if it's a boy: ");
+                String boyName = scanner.nextLine();
+
+                System.out.println("Name for baby, if it's a girl");
+                String girlName = scanner.nextLine();
+
+                Family familyByID = familyController.getFamilyById(familyID - 1);
+                familyController.bornChild(familyByID, boyName, girlName);
+                break;
+            case 2:
+                System.out.print("Enter family ID: ");
+                int familyId = Integer.parseInt(scanner.nextLine());
+
+                if (familyId > familyController.getAllFamilies().size() || familyId < 0)
+                    throw new IllegalArgumentException("Given ID is above the count of family.Back to menu");
+                Human child = null;
+                try {
+                    System.out.print("Enter child name: ");
+                    String childName = scanner.nextLine();
+
+                    System.out.print("Enter child's last name: ");
+                    String childLastName = scanner.nextLine();
+
+                    System.out.print("Enter child's birth year (YYYY): ");
+                    int childBirthYear = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Enter child's birth month (1-12): ");
+                    int childBirthMonth = Integer.parseInt(scanner.nextLine());
+                    if (childBirthMonth < 1 || childBirthMonth > 12) {
+                        throw new IllegalArgumentException("Month must be between 1 and 12.");
+                    }
+
+                    System.out.print("Enter child's birthday (1-31): ");
+                    int childBirthDay = Integer.parseInt(scanner.nextLine());
+                    if (childBirthDay < 1 || childBirthDay > 31) {
+                        throw new IllegalArgumentException("Day must be between 1 and 31");
+                    }
+
+                    LocalDate childBirthDate = LocalDate.of(childBirthYear, childBirthMonth, childBirthDay);
+
+                    System.out.print("Enter child's IQ: ");
+                    int childIQ = Integer.parseInt(scanner.nextLine());
+
+                    child = new Human(childName, childLastName, childBirthDate, childIQ);
+                } catch (NumberFormatException exception) {
+                    System.out.println("Invalid input.Reverting back to menu.");
+                } catch (IllegalArgumentException exception) {
+                    System.out.println(exception.getMessage());
+                }
+                familyController.adoptChild(familyController.getFamilyById(familyId - 1), child);
+                break;
+            case 3:
+                System.out.println("Returning back to menu.");
+                break;
+            default:
+        }
+    }
+
     private void createNewFamily() {
         checkSize();
 
         String motherName, motherSurname, fatherName, fatherSurname;
-        int motherBirthYear, motherBirthMonth, motherBirthDay, motherIq;
-        int fatherBirthYear, fatherBirthMonth, fatherBirthDay, fatherIq;
+        int motherBirthYear, motherBirthMonth, motherBirthDay, motherIQ;
+        int fatherBirthYear, fatherBirthMonth, fatherBirthDay, fatherIQ;
 
         try {
             System.out.print("Enter mother's name: ");
@@ -175,7 +178,7 @@ public class ConsoleApplication {
             LocalDate motherBirthDate = LocalDate.of(motherBirthYear, motherBirthMonth, motherBirthDay);
 
             System.out.print("Enter mother's IQ: ");
-            motherIq = Integer.parseInt(scanner.nextLine());
+            motherIQ = Integer.parseInt(scanner.nextLine());
 
             System.out.print("Enter father's name: ");
             fatherName = scanner.nextLine();
@@ -200,17 +203,17 @@ public class ConsoleApplication {
             LocalDate fatherBirthDate = LocalDate.of(fatherBirthYear, fatherBirthMonth, fatherBirthDay);
 
             System.out.print("Enter father's IQ: ");
-            fatherIq = Integer.parseInt(scanner.nextLine());
+            fatherIQ = Integer.parseInt(scanner.nextLine());
 
-            ManDto father = new ManDto(fatherName, fatherSurname, fatherBirthDate, fatherIq);
-            WomanDto mother = new WomanDto(motherName, motherSurname, motherBirthDate, motherIq);
+            ManDto father = new ManDto(fatherName, fatherSurname, fatherBirthDate, fatherIQ);
+            WomanDto mother = new WomanDto(motherName, motherSurname, motherBirthDate, motherIQ);
             familyController.createNewFamily(father, mother);
 
             System.out.println("New family created successfully.");
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Reverting back to menu.");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (NumberFormatException exception) {
+            System.out.println("Invalid input.Reverting back to menu.");
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
@@ -220,30 +223,34 @@ public class ConsoleApplication {
         try {
             familyController.deleteFamilyByIndex(index - 1);
             System.out.println("Family deleted.");
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Please select available index. Reverting back to menu.");
+        } catch (IndexOutOfBoundsException exception) {
+            System.out.println("Please select available index.Reverting back to menu.");
         }
     }
 
     private void displayMenu() {
-        System.out.print("Make your choice:\n" +
-                "1. Fill with test data\n" +
-                "2. Show all families\n" +
-                "3. Show all families with number of people greater than specified number\n" +
-                "4. Show all families with number of people less than specified number\n" +
-                "5. Show number of families with number of members is specified number\n" +
-                "6. Create a new family\n" +
-                "7. Delete a family by index\n" +
-                "8. Edit a family by index\n" +
-                "9. Remove all children over the age of majority\n" +
-                "10. Exit\n");
+        System.out.print("""
+                Make your choice:
+                1. Fill with test data
+                2. Show all families
+                3. Show all families with number of people greater than specified number
+                4. Show all families with number of people less than specified number
+                5. Show number of families with number of members is specified number
+                6. Create a new family
+                7. Delete a family by index
+                8. Edit a family by index
+                9. Remove all children over the age of majority
+                10. Exit
+                """);
     }
 
     private void altMenuOfEditFamily() {
         System.out.print(
-                "1. Give birth to a baby\n" +
-                        "2. Adopt a child\n" +
-                        "3. Return to main menu\n"
+                """
+                        1. Give birth to a baby
+                        2. Adopt a child
+                        3. Return to main menu
+                        """
         );
     }
 
@@ -299,6 +306,6 @@ public class ConsoleApplication {
 
     public void checkSize() {
         int size = familyController.getAllFamilies().size();
-        if (size>=familyCountLimit) throw new FamilyOverflowException("Family count has reached its limit.");
+        if (size >= familyCountLimit) throw new FamilyOverflowException("Family count has reached its limit.");
     }
 }
