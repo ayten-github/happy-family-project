@@ -81,6 +81,7 @@ public class ConsoleApplication {
             }
         }
     }
+
     private void getBabyInformation(){
         int choiceOfAltMenu = Integer.parseInt(scanner.nextLine());
         switch (choiceOfAltMenu) {
@@ -229,17 +230,19 @@ public class ConsoleApplication {
     }
 
     private void displayMenu() {
-        System.out.print("Make your choice:\n" +
-                "1. Fill with test data\n" +
-                "2. Show all families\n" +
-                "3. Show all families with number of people greater than specified number\n" +
-                "4. Show all families with number of people less than specified number\n" +
-                "5. Show number of families with number of members is specified number\n" +
-                "6. Create a new family\n" +
-                "7. Delete a family by index\n" +
-                "8. Edit a family by index\n" +
-                "9. Remove all children over the age of majority\n" +
-                "10. Exit\n");
+        System.out.print("""
+                Make your choice:
+                1. Fill with test data
+                2. Show all families
+                3. Show all families with number of people greater than specified number
+                4. Show all families with number of people less than specified number
+                5. Show number of families with number of members is specified number
+                6. Create a new family
+                7. Delete a family by index
+                8. Edit a family by index
+                9. Remove all children over the age of majority
+                10. Exit
+                """);
     }
 
     private void altMenuOfEditFamily() {
