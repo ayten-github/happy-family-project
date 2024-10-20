@@ -27,7 +27,7 @@ public interface FamilyService {
 
     boolean deleteFamilyByIndex(int index);
 
-    FamilyDto bornChild(FamilyDto family, String masculineName, String feminineName);
+    Family bornChild(Family family, String masculineName, String feminineName);
 
     Optional<Family> adoptChild(Family family, Human child);
 

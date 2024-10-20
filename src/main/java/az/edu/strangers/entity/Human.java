@@ -20,10 +20,6 @@ public class Human {
 
     public Human() {
     }
-    public String prettyFormat() {
-        return String.format("name='%s', surname='%s', birthDate='%s', IQ=%d, schedule='%s',family=%s",
-                name, surname, birthDate, IQ, schedule,family);
-    }
 
     public Human(String name, String surname, long birthDate) {
         this.name = name;
@@ -135,6 +131,11 @@ public class Human {
         }
     }
 
+    public String prettyFormat() {
+        return String.format("name='%s', surname='%s', birthDate='%s', IQ=%d, schedule='%s',family=%s",
+                name, surname, birthDate, IQ, schedule,family);
+    }
+
     public String toStringV2() {
         return "Human{name='%s', surname='%s', birthdate=%s, iq=%s, schedule=%s}".formatted(name, surname, birthDate, IQ, schedule);
     }
@@ -142,7 +143,7 @@ public class Human {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedBirthDate = convertMillisDate(birthDate).format(formatter);
-        return "{ name='%s', surname='%s', birthdate='%s;schedule='%s' } "
+        return "{ name='%s', surname='%s', birthdate='%s', schedule='%s' }"
                 .formatted(name, surname, formattedBirthDate,schedule);
     }
 

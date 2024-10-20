@@ -106,7 +106,7 @@ public class FamilyServiceImplTest {
                 new WomanDto("Jane", "Karleone", 1975)
         );
 
-        service.bornChild(createdFamily, "Michael", "Tresta");
+        service.bornChild(createdFamily.getFather().getFamily(), "Michael", "Tresta");
 
         assertEquals(1, service.getFamilyById(service.count() - 1).getChildren().size());
     }

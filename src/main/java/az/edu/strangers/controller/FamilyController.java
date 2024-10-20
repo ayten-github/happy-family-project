@@ -25,6 +25,8 @@ public class FamilyController {
     }
 
     public Family getFamilyById(final Integer index) {
+        if (index < 0 && index >= familyService.count()) throw new IndexOutOfBoundsException();
+
         return familyService.getFamilyById(index);
     }
 
@@ -49,17 +51,19 @@ public class FamilyController {
     }
 
     public boolean deleteFamilyByIndex(final int index) {
-        return index >= 0 && index < familyService.count() && familyService.deleteFamilyByIndex(index);
+        if (index < 0 && index >= familyService.count()) throw new IndexOutOfBoundsException();
+
+        return familyService.deleteFamilyByIndex(index);
     }
 
     public boolean deleteFamily(final Family family) {
         return family != null && deleteFamily(family);
     }
 
-    public FamilyDto bornChild(final FamilyDto familyDto, final String masculineName, final String feminineName) {
-        if (familyDto == null || masculineName == null || feminineName == null) return null;
+    public Family bornChild(final Family family, final String masculineName, final String feminineName) {
+        if (family == null || masculineName == null || feminineName == null) return null;
 
-        return familyService.bornChild(familyDto, masculineName, feminineName);
+        return familyService.bornChild(family, masculineName, feminineName);
     }
 
     public Optional<Family> adoptChild(final Family family, final Human child) {

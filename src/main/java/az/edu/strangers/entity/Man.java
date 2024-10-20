@@ -11,6 +11,10 @@ public final class Man extends Human {
         super(name, surname, LocalDate.ofEpochDay(year), IQ);
     }
 
+    public Man(String name, String surname, LocalDate birthday, Integer IQ) {
+        super(name, surname, birthday, IQ);
+    }
+
     @Override
     public void greetPet() {
         if (getFamily() != null && getFamily().getPets() != null && !getFamily().getPets().isEmpty()) {
