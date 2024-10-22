@@ -9,6 +9,8 @@ import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Man;
 import az.edu.strangers.entity.Woman;
 import az.edu.strangers.entity.Pet;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -111,18 +113,10 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<Family> adoptChild(final Family family, final Human child) {
-        if (family == null || child == null) return Optional.empty();
-
-        System.out.println("------");
-        System.out.println(getAllFamilies());
-        System.out.println("------");
-
+    public Optional<Family> adoptChild(final @NotNull Family family, final @NotNull Human child) {
         for (Family existingFamily : getAllFamilies()) {
-            System.out.println("1231231231231");
             if (existingFamily.getFather().getName().equals(family.getFather().getName()) &&
                     existingFamily.getMother().getName().equals(family.getMother().getName())) {
-                System.out.println("a");
                 existingFamily.addChild(child);
                 break;
             }

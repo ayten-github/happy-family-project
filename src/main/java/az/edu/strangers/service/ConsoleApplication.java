@@ -22,8 +22,8 @@ public class ConsoleApplication implements Serializable {
     private final FamilyService familyService = new FamilyServiceImpl(familyDao);
     private final FamilyController familyController = new FamilyController(familyService);
     private final Scanner scanner = new Scanner(System.in);
-    public static final String fileName="app.obj";
-    public static ConsoleApplication consoleApplication=null;
+    public static final String fileName = "family.dat";
+    public static ConsoleApplication consoleApplication;
     private final int familyCountLimit = 5;
 
     public void run() {
@@ -38,7 +38,7 @@ public class ConsoleApplication implements Serializable {
                 switch (choice) {
                     case 1:
                         initializeDao();
-                        saveDate();
+                        saveDate(familyController.getAllFamilies());
                         System.out.println("Database has been successfully filled with test data.");
                         break;
                     case 2:
@@ -87,7 +87,6 @@ public class ConsoleApplication implements Serializable {
                 System.out.println("An error occurred:" + e.getMessage());
                 scanner.nextLine();
             }
-            saveDate();
         }
     }
 
@@ -318,17 +317,13 @@ public class ConsoleApplication implements Serializable {
         if (size >= familyCountLimit) throw new FamilyOverflowException("Family count has reached its limit.");
     }
 
-    public static void saveDate(){
-        FileUtil.writeObjectToFile(consoleApplication,fileName);
+    public static void saveDate(List<Family> families) {
+        FileUtil.writeObjectToFile(families, fileName);
 
     }
 
     public void loadDate() {
-            Object obj = FileUtil.readObjectFromFile("app.obj");
-            if (obj instanceof ConsoleApplication) {
-                consoleApplication = (ConsoleApplication) obj;
-            }
-
-        }
+        List<Family> families = FileUtil.readObjectFromFile(fileName);
+    }
 
 }
