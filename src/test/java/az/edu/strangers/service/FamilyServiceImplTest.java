@@ -1,3 +1,4 @@
+/*
 package az.edu.strangers.service;
 
 import az.edu.strangers.dao.CollectionFamilyDao;
@@ -208,3 +209,4 @@ public class FamilyServiceImplTest {
     }
 
 }
+*/

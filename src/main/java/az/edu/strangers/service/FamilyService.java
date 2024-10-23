@@ -1,17 +1,15 @@
 package az.edu.strangers.service;
 
 import az.edu.strangers.entity.Family;
-import az.edu.strangers.dto.FamilyDto;
-import az.edu.strangers.dto.ManDto;
-import az.edu.strangers.dto.WomanDto;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Pet;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public interface FamilyService {
+
+    void loadData(List<Family> families);
 
     List<Family> getAllFamilies();
 
@@ -23,13 +21,13 @@ public interface FamilyService {
 
     Long countFamiliesWithMemberNumber(Integer number);
 
-    FamilyDto createNewFamily(ManDto man, WomanDto woman);
+    void createNewFamily(Human father, Human mother);
 
     boolean deleteFamilyByIndex(int index);
 
     Family bornChild(Family family, String masculineName, String feminineName);
 
-    Optional<Family> adoptChild(Family family, Human child);
+    Family adoptChild(Family family, Human child);
 
     void deleteAllChildrenOlderThen(Integer age);
 

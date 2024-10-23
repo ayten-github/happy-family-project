@@ -3,8 +3,7 @@ package az.edu.strangers.service;
 import az.edu.strangers.controller.FamilyController;
 import az.edu.strangers.dao.CollectionFamilyDao;
 import az.edu.strangers.dao.FamilyDao;
-import az.edu.strangers.dto.ManDto;
-import az.edu.strangers.dto.WomanDto;
+import az.edu.strangers.dao.FileFamilyDao;
 import az.edu.strangers.entity.Family;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Man;
@@ -18,8 +17,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApplication implements Serializable {
-    private final FamilyDao familyDao = new CollectionFamilyDao();
-    private final FamilyService familyService = new FamilyServiceImpl(familyDao);
+    collectionFamilyDao    private final FamilyDao collectionFamilyDao = new CollectionFamilyDao();
+    private final FamilyDao fileFamilyDao = new FileFamilyDao(fileName);
+    private final FamilyService familyService = new FamilyServiceImpl(collectionFamilyDao);
     private final FamilyController familyController = new FamilyController(familyService);
     private final Scanner scanner = new Scanner(System.in);
     public static final String fileName = "family.dat";
@@ -46,13 +46,11 @@ public class ConsoleApplication implements Serializable {
                         break;
                     case 3:
                         System.out.print("Enter the number: ");
-                        familyController.getFamiliesBiggerThan(scanner.nextInt())
-                                .forEach(System.out::println);
+                        familyController.displayFamiliesBiggerThan(scanner.nextInt());
                         break;
                     case 4:
                         System.out.print("Enter the number: ");
-                        familyController.getFamiliesLessThan(scanner.nextInt())
-                                .forEach(System.out::println);
+                        familyController.displayFamiliesLessThan(scanner.nextInt());
                         break;
                     case 5:
                         System.out.print("Enter the number: ");
@@ -213,8 +211,8 @@ public class ConsoleApplication implements Serializable {
             System.out.print("Enter father's IQ: ");
             fatherIQ = Integer.parseInt(scanner.nextLine());
 
-            ManDto father = new ManDto(fatherName, fatherSurname, fatherBirthDate, fatherIQ);
-            WomanDto mother = new WomanDto(motherName, motherSurname, motherBirthDate, motherIQ);
+            Man father = new Man(fatherName, fatherSurname, fatherBirthDate, fatherIQ);
+            Woman mother = new Woman(motherName, motherSurname, motherBirthDate, motherIQ);
             familyController.createNewFamily(father, mother);
 
             System.out.println("New family created successfully.");
@@ -284,7 +282,6 @@ public class ConsoleApplication implements Serializable {
         Human child7 = new Human("James", "Wilson", LocalDate.of(1980, 1, 1), 92);
         Human child8 = new Human("Charlotte", "Davis", LocalDate.of(1998, 1, 1), 85);
         Human child9 = new Human("Benjamin", "Rodriguez", LocalDate.of(1983, 1, 1), 95);
-        Human child10 = new Human("Lucas", "Martinez", LocalDate.of(1991, 1, 1), 90);
 
         Family family = new Family(man1, woman1);
         family.addChild(child1);
@@ -305,11 +302,11 @@ public class ConsoleApplication implements Serializable {
         Family family5 = new Family(man5, woman5);
         family5.addChild(child9);
 
-        familyDao.saveFamily(family);
-        familyDao.saveFamily(family2);
-        familyDao.saveFamily(family3);
-        familyDao.saveFamily(family4);
-        familyDao.saveFamily(family5);
+        collectionFamilyDao.saveFamily(family);
+        collectionFamilyDao.saveFamily(family2);
+        collectionFamilyDao.saveFamily(family3);
+        collectionFamilyDao.saveFamily(family4);
+        collectionFamilyDao.saveFamily(family5);
     }
 
     public void checkSize() {
@@ -325,5 +322,4 @@ public class ConsoleApplication implements Serializable {
     public void loadDate() {
         List<Family> families = FileUtil.readObjectFromFile(fileName);
     }
-
 }

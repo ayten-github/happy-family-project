@@ -3,6 +3,7 @@ package az.edu.strangers.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -19,7 +20,6 @@ public class Human implements Serializable {
     private Integer IQ;
     private Map<DayOfWeek, String> schedule;
     private Family family;
-//    private FamilyDto familyDto;
 
     public Human() {
     }
@@ -120,6 +120,11 @@ public class Human implements Serializable {
         return new Date(milliInDate).toInstant().
                 atZone(ZoneId.systemDefault()).
                 toLocalDate();
+    }
+
+    public int getAge() {
+        LocalDate birthDateInLocalDate = convertMillisDate(birthDate);
+        return Period.between(birthDateInLocalDate, birthDateInLocalDate).getYears();
     }
 
     public void describePet() {
