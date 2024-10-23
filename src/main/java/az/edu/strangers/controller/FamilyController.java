@@ -25,7 +25,8 @@ public class FamilyController {
     public Family getFamilyById(final Integer index) {
         if (index < 0 && index >= familyService.count()) throw new IndexOutOfBoundsException("Invalid index.");
 
-        return familyService.getFamilyById(index);
+        return familyService.getFamilyById(index)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid index"));
     }
 
     public void displayAllFamilies() {
@@ -40,7 +41,7 @@ public class FamilyController {
         if (families.isEmpty()) {
             System.out.println("No families found with more than " + count + " members.");
         } else {
-            families.forEach(family -> System.out.println(family.prettyFormat()));
+            families.forEach(System.out::println);
         }
     }
 
@@ -54,7 +55,7 @@ public class FamilyController {
         if (families.isEmpty()) {
             System.out.println("No families found with less than " + count + " members.");
         } else {
-            families.forEach(family -> System.out.println(family.prettyFormat()));
+            families.forEach(System.out::println);
         }
     }
 
@@ -72,11 +73,11 @@ public class FamilyController {
             return;
         }
 
-        familyService.createNewFamily(mother, father);
+        familyService.createNewFamily(father, mother);
     }
 
     public boolean deleteFamilyByIndex(final int index) {
-        if (index < 0 && index >= familyService.count()) throw new IndexOutOfBoundsException("Invalid index.");
+        if (index < 0 || index >= familyService.count()) throw new IndexOutOfBoundsException("Invalid index.");
 
         return familyService.deleteFamilyByIndex(index);
     }
@@ -115,8 +116,6 @@ public class FamilyController {
     }
 
     public void loadData(@NotNull List<Family> families) {
-        if (families.isEmpty()) throw new IllegalArgumentException("No families to load.");
-
         familyService.loadData(families);
     }
 

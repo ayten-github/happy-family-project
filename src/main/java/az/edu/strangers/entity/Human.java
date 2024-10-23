@@ -122,9 +122,9 @@ public class Human implements Serializable {
                 toLocalDate();
     }
 
-    public int getAge() {
+    public long getAge() {
         LocalDate birthDateInLocalDate = convertMillisDate(birthDate);
-        return Period.between(birthDateInLocalDate, birthDateInLocalDate).getYears();
+        return ChronoUnit.YEARS.between(birthDateInLocalDate, LocalDate.now());
     }
 
     public void describePet() {

@@ -4,9 +4,10 @@ import az.edu.strangers.entity.Family;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CollectionFamilyDao implements FamilyDao {
-    private final List<Family> families = new ArrayList<>();
+    private List<Family> families = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
@@ -14,16 +15,13 @@ public class CollectionFamilyDao implements FamilyDao {
     }
 
     @Override
-    public Family getFamilyByIndex(int index) {
-        if (index >= 0 && index < families.size()) {
-            return families.get(index);
-        }
-        return null;
+    public Optional<Family> getFamilyByIndex(int index) {
+        return (index >= 0 && index < families.size()) ? Optional.of(families.get(index)) : Optional.empty();
     }
 
     @Override
     public boolean deleteFamily(int index) {
-        if (index >= 0 && index < families.size()) {
+        if (index >= 0 && index < families.size() && !families.isEmpty()) {
             families.remove(index);
             return true;
         }
@@ -48,5 +46,10 @@ public class CollectionFamilyDao implements FamilyDao {
         }
 
         families.add(family);
+    }
+
+    @Override
+    public void loadData(List<Family> families) {
+        this.families = families;
     }
 }

@@ -115,8 +115,8 @@ public class Family implements HumanCreator, Serializable {
 
         Integer childIQ = (getFather().getIQ() + getMother().getIQ()) / 2;
 
-        Human human = isMan ? new Man(masculineName, getFather().getSurname(), LocalDate.now().getYear(), childIQ) :
-                            new Woman(femineName, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+        Human human = isMan ? new Man(masculineName, getFather().getSurname(), LocalDate.now(), childIQ) :
+                            new Woman(femineName, getFather().getSurname(), LocalDate.now(), childIQ);
         this.addChild(human);
 
         return human;

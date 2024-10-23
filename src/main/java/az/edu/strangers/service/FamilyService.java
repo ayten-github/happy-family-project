@@ -5,6 +5,7 @@ import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Pet;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface FamilyService {
@@ -12,6 +13,8 @@ public interface FamilyService {
     void loadData(List<Family> families);
 
     List<Family> getAllFamilies();
+
+    Optional<Family> getFamilyById(Integer index);
 
     void displayAllFamilies();
 
@@ -32,8 +35,6 @@ public interface FamilyService {
     void deleteAllChildrenOlderThen(Integer age);
 
     int count();
-
-    Family getFamilyById(Integer index);
 
     Set<Pet> getPets(Integer index);
 

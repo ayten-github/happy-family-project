@@ -8,6 +8,7 @@ import az.edu.strangers.entity.Pet;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,21 +21,12 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public void loadData(List<Family> families) {
-        families.forEach(familyDao::saveFamily);
-    }
-
-    public List<Family> saveData() {
-        return familyDao.getAllFamilies();
-    }
-
-    @Override
     public List<Family> getAllFamilies() {
         return familyDao.getAllFamilies();
     }
 
     @Override
-    public Family getFamilyById(final Integer index) {
+    public Optional<Family> getFamilyById(final Integer index) {
         return familyDao.getFamilyByIndex(index);
     }
 
@@ -113,18 +105,26 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Set<Pet> getPets(final Integer index) {
-        return familyDao.getFamilyByIndex(index).getPets();
+        return familyDao.getFamilyByIndex(index)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid index"))
+                .getPets();
     }
 
     @Override
     public boolean addPet(final Integer index, final Pet pet) {
-        Family family = familyDao.getFamilyByIndex(index);
+        Family family = familyDao.getFamilyByIndex(index)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid index"));
 
         if (family == null) return false;
 
         family.addPet(pet);
         familyDao.saveFamily(family);
         return true;
+    }
+
+    @Override
+    public void loadData(List<Family> families) {
+        familyDao.loadData(families);
     }
 
     public FamilyDto convertFamily(Family family) {

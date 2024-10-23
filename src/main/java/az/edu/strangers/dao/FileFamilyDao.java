@@ -1,17 +1,20 @@
 package az.edu.strangers.dao;
+
 import az.edu.strangers.entity.Family;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FileFamilyDao implements FamilyDao {
+
     private final String FILE_PATH;
+    private List<Family> families = new ArrayList<>();
 
     public FileFamilyDao(String filePath) {
         this.FILE_PATH = filePath;
     }
-    private List<Family> families = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
@@ -19,41 +22,48 @@ public class FileFamilyDao implements FamilyDao {
     }
 
     @Override
-    public Family getFamilyByIndex(int index) {
-        if (index < 0 || index >= families.size()) {
-            throw new IndexOutOfBoundsException("Invalid family index.");
-        }
-        return families.get(index);
+    public Optional<Family> getFamilyByIndex(int index) {
+        return (index >= 0 && index < families.size()) ? Optional.of(families.get(index)) : Optional.empty();
     }
 
     @Override
     public void saveFamily(Family family) {
-        if (!families.contains(family)) {
-            families.add(family);
+        for (int i = 0; i < families.size(); i++) {
+            Family existingFamily = families.get(i);
+
+            if (existingFamily.getFather().equals(family.getFather())) {
+                int index = families.indexOf(family);
+                families.set(index, family);
+                saveToFile();
+                return;
+            }
         }
+
+        families.add(family);
         saveToFile();
     }
 
     @Override
     public boolean deleteFamily(int index) {
-        if (index < 0 || index >= families.size()) {
-            throw new IndexOutOfBoundsException("Invalid family index.");
+        boolean result = false;
+        if (index >= 0 && index < families.size() && !families.isEmpty()) {
+            Family removed = families.remove(index);
+            result = removed != null;
+            saveToFile();
         }
-        families.remove(index);
-        saveToFile();
 
-        return true;
+        saveToFile();
+        return result;
     }
 
     @Override
     public boolean deleteFamily(Family family) {
         boolean removed = families.remove(family);
 
-        if (!removed) {
-            throw new IllegalArgumentException("Family not found.");
-        }
+        if (removed) saveToFile();
+
         saveToFile();
-        return true;
+        return removed;
     }
 
     public void loadData(List<Family> families) {
@@ -70,12 +80,11 @@ public class FileFamilyDao implements FamilyDao {
             System.out.println("Families loaded successfully from the file.");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading families from the file: " + e.getMessage());
-            families = new ArrayList<>();  // Reset to empty list if loading fails
         }
         return families;
     }
 
-    private void saveToFile() {
+    public void saveToFile() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(families);
             System.out.println("Families saved successfully to the file.");
