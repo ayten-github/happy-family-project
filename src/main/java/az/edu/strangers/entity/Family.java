@@ -110,18 +110,15 @@ public class Family implements HumanCreator, Serializable {
     }
 
     @Override
-    public Human bornChild() {
-        String[] boyNames = {"Alex", "Jord", "Mike"};
-        String[] girlNames = {"Alina", "Julia", "Mia"};
-
+    public Human bornChild(String masculineName, String femineName) {
         boolean isMan = random.nextBoolean();
 
         Integer childIQ = (getFather().getIQ() + getMother().getIQ()) / 2;
 
-        String name = isMan ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(boyNames.length)];
-        Human human = isMan ? new Man(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ) :
-                new Woman(name, getFather().getSurname(), LocalDate.now().getYear(), childIQ);
+        Human human = isMan ? new Man(masculineName, getFather().getSurname(), LocalDate.now(), childIQ) :
+                            new Woman(femineName, getFather().getSurname(), LocalDate.now(), childIQ);
         this.addChild(human);
+
         return human;
     }
 

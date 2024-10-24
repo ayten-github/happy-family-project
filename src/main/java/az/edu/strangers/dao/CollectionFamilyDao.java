@@ -2,43 +2,54 @@ package az.edu.strangers.dao;
 
 import az.edu.strangers.entity.Family;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class CollectionFamilyDao implements FamilyDao, Serializable {
-
-    private final List<Family> FAMILY_LIST = new ArrayList<>();
+public class CollectionFamilyDao implements FamilyDao {
+    private List<Family> families = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
-        return FAMILY_LIST;
+        return families;
     }
 
     @Override
-    public Family getFamilyByIndex(int index) {
-        return index >= 0 && index < FAMILY_LIST.size() ? FAMILY_LIST.get(index) : null;
+    public Optional<Family> getFamilyByIndex(int index) {
+        return (index >= 0 && index < families.size()) ? Optional.of(families.get(index)) : Optional.empty();
     }
 
     @Override
-    public boolean deleteFamily(int id) {
-        return FAMILY_LIST.remove(id) != null;
+    public boolean deleteFamily(int index) {
+        if (index >= 0 && index < families.size() && !families.isEmpty()) {
+            families.remove(index);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean deleteFamily(Family family) {
-        return FAMILY_LIST.remove(family);
+        return families.remove(family);
     }
 
     @Override
-    public Family saveFamily(Family familyEntity) {
-        if (!FAMILY_LIST.contains(familyEntity)) {
-            FAMILY_LIST.add(familyEntity);
-        } else {
-            System.out.println("Family is already contains!");
+    public void saveFamily(Family family) {
+        for (int i = 0; i < families.size(); i++) {
+            Family existingFamily = families.get(i);
+
+            if (existingFamily.getFather().equals(family.getFather())){
+                int index = families.indexOf(family);
+                families.set(index, family);
+                return;
+            }
         }
-        return familyEntity;
+
+        families.add(family);
     }
 
-
+    @Override
+    public void loadData(List<Family> families) {
+        this.families = families;
+    }
 }

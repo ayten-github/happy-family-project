@@ -1,33 +1,30 @@
 package az.edu.strangers.service;
 
 import az.edu.strangers.controller.FamilyController;
-import az.edu.strangers.dao.CollectionFamilyDao;
 import az.edu.strangers.dao.FamilyDao;
-import az.edu.strangers.dto.ManDto;
-import az.edu.strangers.dto.WomanDto;
+import az.edu.strangers.dao.FileFamilyDao;
 import az.edu.strangers.entity.Family;
 import az.edu.strangers.entity.Human;
 import az.edu.strangers.entity.Man;
 import az.edu.strangers.entity.Woman;
 import az.edu.strangers.exception.FamilyOverflowException;
-import az.edu.strangers.util.FileUtil;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApplication implements Serializable {
-    private final FamilyDao familyDao = new CollectionFamilyDao();
-    private final FamilyService familyService = new FamilyServiceImpl(familyDao);
+    private final FileFamilyDao dao =
+//            new CollectionFamilyDao();
+            new FileFamilyDao(fileName);
+    private final FamilyService familyService = new FamilyServiceImpl(dao);
     private final FamilyController familyController = new FamilyController(familyService);
     private final Scanner scanner = new Scanner(System.in);
     public static final String fileName = "family.dat";
-    public static ConsoleApplication consoleApplication;
     private final int familyCountLimit = 5;
 
     public void run() {
-        loadDate();
         boolean canLoop = true;
         while (canLoop) {
             displayMenu();
@@ -37,22 +34,18 @@ public class ConsoleApplication implements Serializable {
 
                 switch (choice) {
                     case 1:
-                        initializeDao();
-                        saveDate(familyController.getAllFamilies());
-                        System.out.println("Database has been successfully filled with test data.");
+                        loadDataFromFile();
                         break;
                     case 2:
                         familyController.displayAllFamilies();
                         break;
                     case 3:
                         System.out.print("Enter the number: ");
-                        familyController.getFamiliesBiggerThan(scanner.nextInt())
-                                .forEach(System.out::println);
+                        familyController.displayFamiliesBiggerThan(scanner.nextInt());
                         break;
                     case 4:
                         System.out.print("Enter the number: ");
-                        familyController.getFamiliesLessThan(scanner.nextInt())
-                                .forEach(System.out::println);
+                        familyController.displayFamiliesLessThan(scanner.nextInt());
                         break;
                     case 5:
                         System.out.print("Enter the number: ");
@@ -75,6 +68,9 @@ public class ConsoleApplication implements Serializable {
                         familyController.deleteAllChildrenOlderThen(ageOfMajority);
                         break;
                     case 10:
+                        loadData();
+                        break;
+                    case 11:
                         canLoop = false;
                         System.out.println("Exiting..");
                         break;
@@ -94,7 +90,7 @@ public class ConsoleApplication implements Serializable {
         int choiceOfAltMenu = Integer.parseInt(scanner.nextLine());
         switch (choiceOfAltMenu) {
             case 1:
-                System.out.print("Enter family iD: ");
+                System.out.print("Enter family ID: ");
                 int familyID = Integer.parseInt(scanner.nextLine());
 
                 System.out.println("Name for baby, if it's a boy: ");
@@ -152,6 +148,7 @@ public class ConsoleApplication implements Serializable {
                 System.out.println("Returning back to menu.");
                 break;
             default:
+                System.out.println("Wrong number. Please select available number next time. Reverting back to menu");
         }
     }
 
@@ -213,8 +210,8 @@ public class ConsoleApplication implements Serializable {
             System.out.print("Enter father's IQ: ");
             fatherIQ = Integer.parseInt(scanner.nextLine());
 
-            ManDto father = new ManDto(fatherName, fatherSurname, fatherBirthDate, fatherIQ);
-            WomanDto mother = new WomanDto(motherName, motherSurname, motherBirthDate, motherIQ);
+            Man father = new Man(fatherName, fatherSurname, fatherBirthDate, fatherIQ);
+            Woman mother = new Woman(motherName, motherSurname, motherBirthDate, motherIQ);
             familyController.createNewFamily(father, mother);
 
             System.out.println("New family created successfully.");
@@ -232,14 +229,14 @@ public class ConsoleApplication implements Serializable {
             familyController.deleteFamilyByIndex(index - 1);
             System.out.println("Family deleted.");
         } catch (IndexOutOfBoundsException exception) {
-            System.out.println("Please select available index.Reverting back to menu.");
+            System.out.println("Please select available index. Reverting back to menu.");
         }
     }
 
     private void displayMenu() {
         System.out.print("""
                 Make your choice:
-                1. Fill with test data
+                1. Load from file
                 2. Show all families
                 3. Show all families with number of people greater than specified number
                 4. Show all families with number of people less than specified number
@@ -248,7 +245,8 @@ public class ConsoleApplication implements Serializable {
                 7. Delete a family by index
                 8. Edit a family by index
                 9. Remove all children over the age of majority
-                10. Exit
+                10. Load to file
+                11. Exit 
                 """);
     }
 
@@ -262,68 +260,20 @@ public class ConsoleApplication implements Serializable {
         );
     }
 
-    void initializeDao() {
-        Man man1 = new Man("John", "Doe", 1985, 56);
-        Man man2 = new Man("Alex", "Smith", 1990, 91);
-        Man man3 = new Man("Michael", "Johnson", 1975, 79);
-        Man man4 = new Man("David", "Brown", 2000, 68);
-        Man man5 = new Man("James", "Williams", 1988, 89);
-
-        Woman woman1 = new Woman("Emily", "Davis", 1992, 72);
-        Woman woman2 = new Woman("Sophia", "Johnson", 1986, 99);
-        Woman woman3 = new Woman("Olivia", "Wilson", 1995, 69);
-        Woman woman4 = new Woman("Ava", "Garcia", 1988, 84);
-        Woman woman5 = new Woman("Isabella", "Martinez", 1990, 85);
-
-        Human child1 = new Human("John", "Doe", LocalDate.of(1985, 1, 1), 100);
-        Human child2 = new Human("Alice", "Smith", LocalDate.of(1990, 1, 1), 91);
-        Human child3 = new Human("Michael", "Brown", LocalDate.of(1978, 1, 1), 95);
-        Human child4 = new Human("Emma", "Jones", LocalDate.of(1995, 1, 1), 23);
-        Human child5 = new Human("William", "Garcia", LocalDate.of(1988, 1, 1), 59);
-        Human child6 = new Human("Sophia", "Miller", LocalDate.of(1992, 1, 1), 88);
-        Human child7 = new Human("James", "Wilson", LocalDate.of(1980, 1, 1), 92);
-        Human child8 = new Human("Charlotte", "Davis", LocalDate.of(1998, 1, 1), 85);
-        Human child9 = new Human("Benjamin", "Rodriguez", LocalDate.of(1983, 1, 1), 95);
-        Human child10 = new Human("Lucas", "Martinez", LocalDate.of(1991, 1, 1), 90);
-
-        Family family = new Family(man1, woman1);
-        family.addChild(child1);
-        family.addChild(child2);
-
-        Family family2 = new Family(man2, woman2);
-        family2.addChild(child3);
-        family2.addChild(child4);
-
-        Family family3 = new Family(man3, woman3);
-        family3.addChild(child5);
-        family3.addChild(child6);
-
-        Family family4 = new Family(man4, woman4);
-        family4.addChild(child7);
-        family4.addChild(child8);
-
-        Family family5 = new Family(man5, woman5);
-        family5.addChild(child9);
-
-        familyDao.saveFamily(family);
-        familyDao.saveFamily(family2);
-        familyDao.saveFamily(family3);
-        familyDao.saveFamily(family4);
-        familyDao.saveFamily(family5);
-    }
-
     public void checkSize() {
         int size = familyController.getAllFamilies().size();
         if (size >= familyCountLimit) throw new FamilyOverflowException("Family count has reached its limit.");
     }
 
-    public static void saveDate(List<Family> families) {
-        FileUtil.writeObjectToFile(families, fileName);
-
+    public void loadDataFromFile() throws FileNotFoundException {
+        if (dao instanceof FileFamilyDao) {
+            ((FileFamilyDao) dao).loadFromFile();
+            System.out.println("loaded from file");
+        } else System.out.println("Working with files is not available.");
     }
 
-    public void loadDate() {
-        List<Family> families = FileUtil.readObjectFromFile(fileName);
+    public void loadData() throws FileNotFoundException {
+        familyController.loadData(familyController.getAllFamilies());
+        System.out.println("Data loaded to file.");
     }
-
 }

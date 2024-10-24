@@ -2,5 +2,5 @@ package az.edu.strangers.entity;
 
 public interface HumanCreator {
 
-     Human bornChild();
+     Human bornChild(String masculineName, String femineName);
 }

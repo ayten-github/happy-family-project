@@ -1,23 +1,15 @@
 package az.edu.strangers.service;
 
-import az.edu.strangers.entity.Family;
 import az.edu.strangers.dao.FamilyDao;
 import az.edu.strangers.dto.FamilyDto;
-import az.edu.strangers.dto.ManDto;
-import az.edu.strangers.dto.WomanDto;
+import az.edu.strangers.entity.Family;
 import az.edu.strangers.entity.Human;
-import az.edu.strangers.entity.Man;
-import az.edu.strangers.entity.Woman;
 import az.edu.strangers.entity.Pet;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class FamilyServiceImpl implements FamilyService {
@@ -34,7 +26,7 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Family getFamilyById(final Integer index) {
+    public Optional<Family> getFamilyById(final Integer index) {
         return familyDao.getFamilyByIndex(index);
     }
 
@@ -67,15 +59,9 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public FamilyDto createNewFamily(ManDto man, WomanDto woman) {
-        Woman mother = new Woman(woman.getName(), woman.getSurname(), woman.getBirthDate(), woman.getIQ());
-        Man father = new Man(man.getName(), man.getSurname(), man.getBirthDate(), man.getIQ());
-
-        Family familyEntity = new Family(father, mother);
-
-        Family savedFamily = familyDao.saveFamily(familyEntity);
-
-        return new FamilyDto(savedFamily.getFather(), savedFamily.getMother());
+    public void createNewFamily(Human father, Human mother) {
+        Family family = new Family(father, mother);
+        familyDao.saveFamily(family);
     }
 
     @Override
@@ -89,23 +75,8 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Family bornChild(Family family, String masculineName, String feminineName) {
-        Human father = family.getFather();
-
-        boolean isBoy = new Random().nextBoolean();
-
-        String surname = father.getSurname();
-        int birthYear = LocalDate.now().getYear();
-
-        Human newbornChild = isBoy ?
-                new Man(masculineName, surname, birthYear) :
-                new Woman(feminineName, surname, birthYear);
-
-        List<Human> children = family.getChildren();
-        if (children == null) {
-            children = new ArrayList<>();
-        }
-        children.add(newbornChild);
-        family.setChildren(children);
+        Human newbornChild = family.bornChild(masculineName, feminineName);
+        familyDao.saveFamily(family);
 
         System.out.println("New child born: " + newbornChild.getName() + " " + newbornChild.getSurname());
 
@@ -113,28 +84,17 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<Family> adoptChild(final @NotNull Family family, final @NotNull Human child) {
-        for (Family existingFamily : getAllFamilies()) {
-            if (existingFamily.getFather().getName().equals(family.getFather().getName()) &&
-                    existingFamily.getMother().getName().equals(family.getMother().getName())) {
-                existingFamily.addChild(child);
-                break;
-            }
-
-        }
-        return Optional.of(family);
+    public Family adoptChild(final @NotNull Family family, final @NotNull Human child) {
+        family.addChild(child);
+        familyDao.saveFamily(family);
+        return family;
     }
 
     @Override
     public void deleteAllChildrenOlderThen(Integer age) {
-        List<Family> familyList = getAllFamilies();
-        int nowYear = LocalDate.now().getYear();
-
-        familyList.forEach(family -> {
-            List<Human> olderChildren = family.getChildren().stream()
-                    .filter(child -> (nowYear - child.convertMillisDate(child.getYear()).getYear()) <= age)
-                    .collect(Collectors.toList());
-            family.setChildren(olderChildren);
+        familyDao.getAllFamilies().forEach(family -> {
+            family.getChildren().removeIf(child -> child.getAge() > age);
+            familyDao.saveFamily(family);
         });
     }
 
@@ -145,19 +105,29 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Set<Pet> getPets(final Integer index) {
-        return familyDao.getFamilyByIndex(index).getPets();
+        return familyDao.getFamilyByIndex(index)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid index"))
+                .getPets();
     }
 
     @Override
     public boolean addPet(final Integer index, final Pet pet) {
-        Family family = familyDao.getAllFamilies().get(index);
+        Family family = familyDao.getFamilyByIndex(index)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid index"));
+
+        if (family == null) return false;
+
         family.addPet(pet);
+        familyDao.saveFamily(family);
         return true;
+    }
+
+    @Override
+    public void loadData(List<Family> families) {
+        familyDao.loadData(families);
     }
 
     public FamilyDto convertFamily(Family family) {
         return new FamilyDto(family.getFather(), family.getMother());
     }
-
-
 }
